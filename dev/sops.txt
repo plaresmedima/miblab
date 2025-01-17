@@ -132,7 +132,6 @@ Creating a new release (from a fork)
 
 Creating a PyPi release
 -----------------------
-
 In the terminal, cd to the /vreg directory, and:
 
 >>> python -m build

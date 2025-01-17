@@ -141,6 +141,6 @@ In the terminal, cd to the /vreg directory, and:
 When prompted for user name, enter __token__
 
 As password paste the API token generated in PyPi dcmri repository 
-settings (https://pypi.org/manage/project/vreg/settings/). 
+settings (https://pypi.org/manage/project/miblab/settings/). 
 Note: Paste with Ctrl-V does not work in Windows. Use Edit > Paste via the menu.
 

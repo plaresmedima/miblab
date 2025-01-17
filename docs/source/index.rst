@@ -1,6 +1,9 @@
-##########################################################
-The open laboratory for medical imaging biomarker research
-##########################################################
+##############
+**miblab.org**
+##############
+
+
+*An open laboratory for medical imaging biomarker research*
 
 
 *******
@@ -11,18 +14,20 @@ To accelerate the uptake of medical imaging biomarkers in clinical practice,
 drug development and clinical research.
 
 We do this through a commitment to share our resources freely, to remove the 
-need for duplicate development and promote standardisation of methods.
+need for duplicate development and improve the reproducibility of medical 
+imaging biomarker assays.
 
-*******
-License
-*******
 
-``miblab`` software is distributed under the 
+*********
+Licensing
+*********
+
+All ``miblab`` software is distributed under the 
 `Apache 2.0 <https://www.apache.org/licenses/LICENSE-2.0>`_ license - a 
 permissive, free license that allows users to use, modify, and 
 distribute the software without restrictions.
 
-``miblab`` data are distributed under the `CC-BY license <https://creativecommons.org/licenses/by/4.0/>`_.
+All ``miblab`` data are distributed under the `CC-BY license <https://creativecommons.org/licenses/by/4.0/>`_.
 
 .. toctree::
    :maxdepth: 2

@@ -7,10 +7,10 @@ from pathlib import Path
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
-project = 'vreg'
-copyright = '2024-2025, vreg maintainers'
-author = 'vreg maintainers'
-release = '0.0.3'
+project = 'miblab'
+copyright = '2025, miblab contributors'
+author = 'miblab contributors'
+release = '0.0.0'
 
 # -- Path setup --------------------------------------------------------------
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -73,7 +73,7 @@ sphinx_gallery_conf = {
     'backreferences_dir': 'generated/backreferences',
 
     # Modules for which function/class level galleries are created. 
-    'doc_module': ('vreg', ),
+    'doc_module': ('miblab', ),
 
     # objects to exclude from implicit backreferences. The default option
     # is an empty set, i.e. exclude nothing.
@@ -89,7 +89,7 @@ sphinx_gallery_conf = {
     'matplotlib_animations': (True, 'jshtml'),
 
     # Image scrapers are plugins that allow Sphinx-Gallery to detect images
-    'image_scrapers': ('pyvista', 'matplotlib'),
+    'image_scrapers': ('matplotlib', ),
 }
 
 # This way a link to other methods, classes, or modules can be made with back ticks so that you don't have to use qualifiers like :class:, :func:, :meth: and the likes
@@ -133,7 +133,7 @@ always_document_param_types = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for a list of builtin themes
 html_theme = 'pydata_sphinx_theme'
 html_theme_options = {
-    "github_url": "https://github.com/QIB-Sheffield/vreg",
+    "github_url": "https://github.com/openmiblab/miblab",
     "collapse_navigation": True,
     }
 

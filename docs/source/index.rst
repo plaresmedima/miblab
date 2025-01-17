@@ -1,6 +1,6 @@
-##############
-**miblab.org**
-##############
+##########
+miblab.org
+##########
 
 
 *An open laboratory for medical imaging biomarker research*

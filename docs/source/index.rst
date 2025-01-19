@@ -1,42 +1,75 @@
+.. _mainpage:
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   
+   pypa
+   data
+   pipelines
+   dl_models
+   reference/index
+   projects
+   contribute/index
+   releases/index
+   about/index
+
+
+
 ##########
 miblab.org
 ##########
 
+*An open laboratory for research, development and deployment of medical 
+imaging biomarkers*
 
-*An open laboratory for medical imaging biomarker research*
+
+**Useful links**:
+:ref:`Python packages <python_packages>` |
+:ref:`Data <data>` |
+:ref:`Pipelines <pipelines>` |
+:ref:`DL models <dl_models>` |
+:ref:`Projects <projects>` |
+:ref:`API reference <api_reference>` |
+`Book chapter <https://www.sciencedirect.com/science/article/pii/B9780128170571000020>`_
 
 
 *******
 Mission
 *******
 
-To accelerate the uptake of medical imaging biomarkers in clinical practice, 
-drug development and clinical research.
+To accelerate the uptake of medical imaging biomarkers in research, drug 
+development and clinical practice.
 
-We do this through a commitment to share our resources freely, to remove the 
-need for duplicate development and improve the reproducibility of medical 
-imaging biomarker assays.
+
+********
+Approach
+********
+
+We will achieve our mission by a commitment to share resources freely, 
+with robust software architectures and user interfaces that are transparent 
+and consistent across all of *miblab*'s resources. 
+
+Our aim is to maximise the opportunities for reuse of data, software and 
+measurement protocols. This will accelerate uptake of medical imaging 
+biomarkers by improving both the efficiency and reproducibility of research 
+and development.
 
 
 *********
 Licensing
 *********
 
-All ``miblab`` software is distributed under the 
-`Apache 2.0 <https://www.apache.org/licenses/LICENSE-2.0>`_ license - a 
-permissive, free license that allows users to use, modify, and 
-distribute the software without restrictions.
+*miblab* is rooted in public-private partnerships and recognises that 
+efficient research, development and deployment of medical imaging biomarkers 
+benefits from frictionless collaboration between sectors. 
 
-All ``miblab`` data are distributed under the `CC-BY license <https://creativecommons.org/licenses/by/4.0/>`_.
+*miblab*'s licensing approach reflects this principle and allows users to 
+share and adapt its resources with minimal restrictions, including for 
+commercial use:
 
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   
-   user_guide/index
-   reference/index
-   generated/examples/index
-   contribute/index
-   releases/index
-   about/index
+- All *miblab* software is distributed under the 
+  `Apache 2.0 license <https://www.apache.org/licenses/LICENSE-2.0>`_.
 
+- All *miblab* data are distributed under the 
+  `CC-BY license <https://creativecommons.org/licenses/by/4.0/>`_.

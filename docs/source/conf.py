@@ -145,11 +145,11 @@ source_suffix = ['.rst', '.md']
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = '_static/ibeat-logo.png'
+html_logo = '_static/miblab-logo.png'
 
 # The base URL which points to the root of the HTML documentation. 
 # It is used to indicate the location of document
-# html_baseurl = "https://qib-sheffield.github.io/vreg/"
+html_baseurl = "https://miblab.org"
 
 # Autodoc configuration
 # autoclass_content = 'both'  # Direct autoclass to include both Class and __init__ doc strings 

@@ -1,12 +1,17 @@
-.. _reference-guide:
+.. _api_reference:
 
-#########
-Reference
-#########
+#############
+API reference
+#############
 
 
-This reference manual details all functions included in ``miblab``, describing 
-what they are and what they do. 
+A list of all functions in the ``miblab`` python package. 
+
+This package provides an API to *miblab* operations that are relevant 
+across applications such as retrieving data or models, generating pdf 
+reports, or deploying pipelines.
+
+*Coming soon..*
 
 
 .. toctree::

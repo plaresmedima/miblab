@@ -2,9 +2,6 @@
 .. _core-developers-team:
 
 
-Maintainers:
-
-
 .. raw:: html
 
    <div class="team-member">

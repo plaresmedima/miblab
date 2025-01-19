@@ -9,7 +9,7 @@ python ecosystem.
 
 
 .. grid:: 1 1 2 2
-    :gutter: 2 3 4 4
+    :gutter: 4 4 4 4
 
     .. grid-item-card::
         :img-top: ../source/_static/dcmri-banner.png

@@ -24,14 +24,17 @@ miblab.org
 imaging biomarkers*
 
 
-**Useful links**:
-:ref:`Python packages <python_packages>` |
+**Resources**:
+:ref:`Packages <python_packages>` |
 :ref:`Data <data>` |
 :ref:`Pipelines <pipelines>` |
-:ref:`DL models <dl_models>` |
-:ref:`Projects <projects>` |
-:ref:`API reference <api_reference>` |
-`Book chapter <https://www.sciencedirect.com/science/article/pii/B9780128170571000020>`_
+:ref:`Models <dl_models>` |
+:ref:`Tools <api_reference>` |
+`Reading <https://www.sciencedirect.com/science/article/pii/B9780128170571000020>`_
+
+**Links**:
+`Github organization <https://github.com/openmiblab>`_ |
+`Zenodo community <https://zenodo.org/communities>`_ 
 
 
 *******

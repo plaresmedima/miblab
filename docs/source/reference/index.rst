@@ -1,8 +1,8 @@
 .. _api_reference:
 
-#############
-API reference
-#############
+#####
+Tools
+#####
 
 
 A list of all functions in the ``miblab`` python package. 

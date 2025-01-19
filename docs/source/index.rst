@@ -16,9 +16,9 @@
 
 
 
-##########
-miblab.org
-##########
+######
+miblab
+######
 
 *An open laboratory for research, development and deployment of medical 
 imaging biomarkers*

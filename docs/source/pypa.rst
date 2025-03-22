@@ -40,7 +40,7 @@ python ecosystem.
 
         +++
 
-        .. button-link:: https://openmiblab.github.io/mdreg//
+        .. button-link:: https://openmiblab.github.io/mdreg/
             :expand:
             :color: secondary
             :click-parent:
@@ -58,7 +58,7 @@ python ecosystem.
 
         +++
 
-        .. button-link:: https://qib-sheffield.github.io/vreg/
+        .. button-link:: https://openmiblab.github.io/vreg/
             :expand:
             :color: secondary
             :click-parent:
@@ -76,7 +76,7 @@ python ecosystem.
 
         +++
 
-        .. button-link:: https://qib-sheffield.github.io/dbdicom/
+        .. button-link:: https://openmiblab.github.io/dbdicom/
             :expand:
             :color: secondary
             :click-parent:

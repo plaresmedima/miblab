@@ -4,14 +4,17 @@
 Reporting
 *********
 
-.. currentmodule:: miblab
+.. currentmodule:: miblab.report
 
-
+This module provides functions to generate pdf reports.
 
 .. autosummary::
    :toctree: ../generated/api/
-   :template: class.rst
-   :recursive:
+   :template: autosummary.rst
+
+   setup
+   build
+
 
 
 

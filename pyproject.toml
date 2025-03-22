@@ -6,12 +6,12 @@ requires = ['setuptools>=61.2']
 
 [project]
 name = "miblab"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
-  'numpy<=1.26.4',
+  'importlib-resources>=1.1.0',
 ]
 # optional information
-description = "Resources of the open laboratory for medical imaging biomarker research"
+description = "Resources of the open laboratory for medical imaging biomarkers"
 readme = "README.rst"
 authors = [
   { name = "Steven Sourbron", email = "s.sourbron@sheffield.ac.uk" },
@@ -39,7 +39,7 @@ keywords = [
   "medical imaging",  
   "MRI",
 ]
-requires-python = ">=3.6" # arbitrary - relax this?
+requires-python = ">=3.6"
 
 
 [project.urls]
@@ -47,8 +47,8 @@ requires-python = ">=3.6" # arbitrary - relax this?
 "Source Code" = "https://github.com/openmiblab/miblab"
 
 [project.optional-dependencies]
-plot = [
-  'matplotlib',
+report = [
+  'pylatex',
 ]
 
 [tool.setuptools]

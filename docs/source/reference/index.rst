@@ -11,8 +11,6 @@ This package provides an API to *miblab* operations that are relevant
 across applications such as retrieving data or models, generating pdf 
 reports, or deploying pipelines.
 
-*Coming soon..*
-
 
 .. toctree::
    :maxdepth: 2

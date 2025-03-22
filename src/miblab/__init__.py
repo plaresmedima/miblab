@@ -1,2 +1,2 @@
-# from miblab import optimize
-# from miblab.optimize import *
+from miblab import report
+from miblab.report import *

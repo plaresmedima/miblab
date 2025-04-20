@@ -1,6 +1,7 @@
 import sys
 import os
 import shutil
+import csv
 
 try:
     import pylatex as pl
@@ -21,7 +22,7 @@ else:
     # importlib.resources has files(), so use that:
     import importlib.resources as importlib_resources
 
-static = importlib_resources.files('miblab._static')
+static = importlib_resources.files('miblab.static')
 layout = importlib_resources.files('miblab.layout')
 cover = str(static.joinpath('cover.jpg'))
 epflreport = str(static.joinpath('epflreport.cls'))
@@ -103,6 +104,10 @@ def setup(
     doc.documentclass = pl.Command('documentclass',"epflreport")
     makecover(doc, title, subtitle, subject, author, affiliation)
     titlepage(doc, reportpath, contact, institute, department, email)
+
+    doc.append(pl.NewPage())
+    doc.append(NoEscape('\\tableofcontents'))
+    doc.append(NoEscape('\\mainmatter'))
     return doc
 
 
@@ -232,6 +237,41 @@ def titlepage(
         pic.add_image(im, width='2in')
     doc.append(pl.Command('end', 'center'))
     doc.append(pl.Command('end', 'titlepage'))
+
+
+def chapter(doc, title):
+    doc.append(NoEscape('\\clearpage'))
+    doc.append(pl.Command('chapter', title)) 
+
+
+def figure(doc, file, width='6in', caption=None):
+    with doc.create(pl.Figure(position='h!')) as pic:
+        pic.add_image(file, width=width)
+        if caption is not None:
+            pic.add_caption(caption)
+
+
+def table(doc, file, caption=None, cwidth=None):
+
+    with open(file, mode='r', newline='') as f:
+        reader = csv.reader(f)
+        header = next(reader)
+        data = list(reader)
+
+    cols = len(data[0]) - 1
+    if cwidth is None:
+        format = 'r' + 'c'*cols
+    else:
+        format = '|p{'+str(cwidth)+'cm}|'+('p{'+str(cwidth)+'cm}|')*cols
+    with doc.create(pl.LongTable(format)) as table:
+        table.add_hline()
+        table.add_row(header)
+        table.add_hline()
+        for row in data:
+            table.add_row(row)
+        table.add_hline()
+        if caption is not None:
+            table.append(NoEscape(r'\caption{'+caption+r'} \\'))
 
 
 def build(

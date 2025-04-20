@@ -240,18 +240,42 @@ def titlepage(
 
 
 def chapter(doc, title):
+    """Add a chapter to the report.
+
+    Args:
+        doc (pylatex.Document): Insert in this document.
+        title (str): Chapter title.
+    """
     doc.append(NoEscape('\\clearpage'))
     doc.append(pl.Command('chapter', title)) 
 
 
 def figure(doc, file, width='6in', caption=None):
+    """Add a figure to the report.
+
+    Args:
+        doc (pylatex.Document): Insert in this document.
+        file (str): Path to the figure file.
+        width (str, optional): Figure width. Defaults to '6in'.
+        caption (str, optional): Caption for the figure. Defaults to None.
+    """
     with doc.create(pl.Figure(position='h!')) as pic:
         pic.add_image(file, width=width)
         if caption is not None:
             pic.add_caption(caption)
 
 
-def table(doc, file, caption=None, cwidth=None):
+def table(doc, file, cwidth=None, caption=None):
+    """Add a table to the report.
+    
+    The table is created from a csv file. The first row is used as the header.
+
+    Args:
+        doc (pylatex.Document): Insert in this document.
+        file (str): Path to the csv file.
+        cwidth (str, optional): Column width. Defaults to None (automaticaly chosen).
+        caption (str, optional): Caption for the table. Defaults to None.
+    """
 
     with open(file, mode='r', newline='') as f:
         reader = csv.reader(f)
@@ -276,8 +300,8 @@ def table(doc, file, caption=None, cwidth=None):
 
 def build(
         doc: pl.Document, 
-        filename, 
         reportpath,
+        filename='report',  
     ):
     """Create the report.
 
@@ -285,10 +309,10 @@ def build(
     ----------
     doc : pylatex.Document
         The report document.
-    filename : str
-        The name of the report.
     reportpath : str
         Path to the folder where the report should be saved.
+    filename (str, optional): str
+        The name of the report. Defaults to 'report
 
     Raises
     ------
@@ -304,13 +328,16 @@ def build(
     outputpath = os.path.join(reportpath, 'report')
     if not os.path.exists(outputpath):
         os.makedirs(outputpath)
-    doc.generate_pdf(
-        filename, 
-        clean=False, 
-        clean_tex=False, 
-        compiler='pdfLaTeX', 
-        compiler_args=['-output-directory', outputpath],
-    )
+    
+    # Build twice so all references are correct
+    for _ in [1,2]:
+        doc.generate_pdf(
+            filename, 
+            clean=False, 
+            clean_tex=False, 
+            compiler='pdfLaTeX', 
+            compiler_args=['-output-directory', outputpath],
+        )
 
     # Move all files to output folder and clean up
     force_move(os.path.join(path, 'cover.jpg'), os.path.join(outputpath, 'cover.jpg'))

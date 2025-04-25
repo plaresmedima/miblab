@@ -123,7 +123,8 @@ Creating a new release (from a fork)
 - Build release notes (see above), build and check the documentation,
   and push changes to dev. 
 - Merge the dev branch with the main branch. 
-  Check that the documentation builds OK. Check README.
+  Check that the documentation builds OK. Check README. 
+- Set the URL back to miblab.org in https://github.com/openmiblab/miblab/settings/pages
 - Create a release on github, with the main branch as target.
 - Create a release on PyPI (see below).
 - v1.0 and onwards: Create a versioned release on Zenodo
@@ -135,8 +136,6 @@ In the terminal, cd to the /miblab directory, and:
 
 >>> python -m build
 >>> twine upload dist/*
-
-When prompted for user name, enter __token__
 
 As password paste the API token generated in PyPi dcmri repository 
 settings (https://pypi.org/manage/project/miblab/settings/). 

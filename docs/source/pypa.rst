@@ -4,8 +4,7 @@
 Packages
 ########
 
-A collection of python packages developed to fill gaps in the 
-python ecosystem.
+Python packages developed and maintained by miblab.
 
 
 .. grid:: 1 1 2 2

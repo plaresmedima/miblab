@@ -49,22 +49,190 @@ def force_copy_dir(src, dst):
     shutil.copytree(src, dst)
 
 
+
+class Report(pl.Document):
+    """
+    Generate pdf reports in miblab style. 
+
+    Parameters
+    ----------
+    reportpath : str
+        Path to the folder where the report should be saved.
+    title : str
+        The title of the report.
+    subtitle : str  
+        The subtitle of the report.
+    subject : str
+        The subject of the report.
+    author : str
+        The author of the report.
+    affiliation : str
+        The affiliation of the author.
+    contact : str
+        The contact person for the report.
+    institute : str
+        The institute of the author.
+    department : str
+        The department of the author.
+    email : str
+        The email of the author.
+
+    Example
+    -------
+
+    .. code-block:: python
+
+        from miblab import Report
+
+        # Where to save the report
+        path = 'path/to/report/folder'
+
+        # Setup the report
+        doc = Report(path, title='My Report', author='Me')
+
+        # Add a chapter
+        doc.chapter('Chapter 1')
+
+        # Add a section
+        doc.section('Section 1')
+
+        # Start a new page
+        doc.clearpage()
+
+        # Add a subsection
+        doc.subsection('Section 1')
+
+        # Add a figure
+        doc.figure('figure.png', caption='This is a figure.')
+
+        # Add a table
+        doc.table('table.csv', caption='This is a table.')
+
+        # Build the pdf report
+        doc.build(doc)
+
+    Note
+    ----
+    `miblab.Report` inherits from pylatex.Document, so can be used 
+    in the same way as a pylatex.Document for full customization 
+    options.
+            
+    """
+
+    def __init__(
+            self,
+            reportpath,
+            title='MIBLAB report', 
+            subtitle='Subtitle', 
+            subject='Subject',
+            author='miblab.org',
+            affiliation='https://miblab.org',  
+            contact='Steven Sourbron',
+            institute='University of Sheffield',
+            department='Section of Medical Imaging and Technologies',
+            email='s.sourbron@sheffield.ac.uk',      
+        ):
+        super().__init__()
+        self.path = reportpath
+        setup(
+            self, reportpath, title, subtitle, subject, author,
+            affiliation, contact, institute, department, email,
+        )
+
+    def clearpage(self):
+        """Continue on a new page.
+        """
+        self.append(NoEscape('\\clearpage'))
+
+    def chapter(self, title):
+        """Add a chapter to the report.
+
+        Args:
+            title (str): Chapter title.
+        """
+        chapter(self, title)
+
+
+    def section(self, title, clearpage=False):
+        """Add a section to the report.
+
+        Args:
+            title (str): Chapter title.
+            clearpage (bool, optional): Start section on a new page
+        """
+        section(self, title, clearpage)
+
+
+    def subsection(self, title, clearpage=False):
+        """Add a subsection to the report.
+
+        Args:
+            title (str): Chapter title.
+            clearpage (bool, optional): Start section on a new page
+        """
+        subsection(self, title, clearpage)
+
+
+    def figure(self, file, width='6in', caption=None):
+        """Add a figure to the report.
+
+        Args:
+            file (str): Path to the figure file.
+            width (str, optional): Figure width. Defaults to '6in'.
+            caption (str, optional): Caption for the figure. Defaults to None.
+        """
+        figure(self, file, width, caption)
+
+
+    def table(self, file, cwidth=None, caption=None):
+        """Add a table to the report.
+        
+        The table is created from a csv file. The first row is used as the header.
+
+        Args:
+            file (str): Path to the csv file.
+            cwidth (str, optional): Column width. Defaults to None (automaticaly chosen).
+            caption (str, optional): Caption for the table. Defaults to None.
+        """
+        table(self, file, cwidth, caption)
+
+
+    def build(self, filename='report'):
+        """Create the report.
+
+        Parameters
+        ----------
+        filename (str, optional): str
+            The name of the report. Defaults to 'report
+
+        Raises
+        ------
+        NotImplementedError
+            If miblab is not installed.
+        """
+        build(self, self.path, filename)
+
+
+
+
 def setup(
+        doc : pl.Document,
         reportpath,
-        title='Title', 
-        subtitle='Interim analysis', 
+        title='MIBLAB report', 
+        subtitle='Subtitle', 
         subject='Subject',
-        author='TRISTAN work package 2',
-        affiliation='https://www.imi-tristan.eu/liver',  
+        author='miblab.org',
+        affiliation='https://miblab.org',  
         contact='Steven Sourbron',
         institute='University of Sheffield',
         department='Section of Medical Imaging and Technologies',
-        email='s.sourbron@sheffield.ac.uk',      
+        email='s.sourbron@sheffield.ac.uk',       
     ):
     """Setup the report document.
     
     Parameters
     ----------
+    doc : pylatex.Document
     reportpath : str
         Path to the folder where the report should be saved.
     title : str
@@ -94,13 +262,15 @@ def setup(
     if import_error:
         raise NotImplementedError(
             'Please install miblab as pip install miblab[report]'
-            'to use this function.')
+            'to use this function.'
+        )
     dst = os.path.abspath("")
     outputpath = os.path.join(reportpath, 'report')
     force_copy(cover, os.path.join(dst, 'cover.jpg'))
     force_copy(epflreport, os.path.join(dst, 'epflreport.cls'))
     force_copy_dir(layout._paths[0], os.path.join(outputpath, 'layout'))
-    doc = pl.Document()
+    #doc = pl.Document()
+    #doc = Report()
     doc.documentclass = pl.Command('documentclass',"epflreport")
     makecover(doc, title, subtitle, subject, author, affiliation)
     titlepage(doc, reportpath, contact, institute, department, email)
@@ -108,16 +278,16 @@ def setup(
     doc.append(pl.NewPage())
     doc.append(NoEscape('\\tableofcontents'))
     doc.append(NoEscape('\\mainmatter'))
-    return doc
+    #return doc
 
 
 def makecover(
         doc: pl.Document, 
-        title = 'Title', 
-        subtitle = 'Interim analysis', 
-        subject = 'Subject',
-        author = 'TRISTAN work package 2',
-        affiliation = 'https://www.imi-tristan.eu/liver',
+        title='MIBLAB report', 
+        subtitle='Subtitle', 
+        subject='Subject',
+        author='miblab.org',
+        affiliation='https://miblab.org',  
     ):
     """Add a cover page to the report.
     
@@ -250,6 +420,32 @@ def chapter(doc, title):
     doc.append(pl.Command('chapter', title)) 
 
 
+def section(doc, title, clearpage=False):
+    """Add a section to the report.
+
+    Args:
+        doc (pylatex.Document): Insert in this document.
+        title (str): Chapter title.
+        clearpage (bool, optional): Start section on a new page
+    """
+    if clearpage:
+        doc.append(NoEscape('\\clearpage'))
+    doc.append(pl.Section(title)) 
+
+
+def subsection(doc, title, clearpage=False):
+    """Add a subsection to the report.
+
+    Args:
+        doc (pylatex.Document): Insert in this document.
+        title (str): Chapter title.
+        clearpage (bool, optional): Start section on a new page
+    """
+    if clearpage:
+        doc.append(NoEscape('\\clearpage'))
+    doc.append(pl.Subsection(title)) 
+
+
 def figure(doc, file, width='6in', caption=None):
     """Add a figure to the report.
 
@@ -259,6 +455,11 @@ def figure(doc, file, width='6in', caption=None):
         width (str, optional): Figure width. Defaults to '6in'.
         caption (str, optional): Caption for the figure. Defaults to None.
     """
+    if not os.path.exists(file):
+        raise ValueError(
+            f"Cannot insert figure.\n"
+            f"Figure source file {file} does not exist."
+        )
     with doc.create(pl.Figure(position='h!')) as pic:
         pic.add_image(file, width=width)
         if caption is not None:
@@ -276,7 +477,11 @@ def table(doc, file, cwidth=None, caption=None):
         cwidth (str, optional): Column width. Defaults to None (automaticaly chosen).
         caption (str, optional): Caption for the table. Defaults to None.
     """
-
+    if not os.path.exists(file):
+        raise ValueError(
+            f"Cannot insert table.\n"
+            f"Table source file {file} does not exist."
+        )
     with open(file, mode='r', newline='') as f:
         reader = csv.reader(f)
         header = next(reader)
@@ -295,6 +500,8 @@ def table(doc, file, cwidth=None, caption=None):
             table.add_row(row)
         table.add_hline()
         if caption is not None:
+            for char in ['_','#','$','%','&','{','}','^']:
+                caption = caption.replace(char, '\\'+char)
             table.append(NoEscape(r'\caption{'+caption+r'} \\'))
 
 
@@ -331,13 +538,20 @@ def build(
     
     # Build twice so all references are correct
     for _ in [1,2]:
-        doc.generate_pdf(
-            filename, 
-            clean=False, 
-            clean_tex=False, 
-            compiler='pdfLaTeX', 
-            compiler_args=['-output-directory', outputpath],
-        )
+        try:
+            doc.generate_pdf(
+                filename, 
+                clean=False, 
+                clean_tex=False, 
+                compiler='pdfLaTeX', 
+                compiler_args=['-output-directory', outputpath],
+            )
+        except UnicodeDecodeError:
+            raise RuntimeError(
+                "Can't build LaTeX file due to incorrect "
+                "formatting. \nTo debug, build the document section "
+                "by section."
+            )
 
     # Move all files to output folder and clean up
     force_move(os.path.join(path, 'cover.jpg'), os.path.join(outputpath, 'cover.jpg'))

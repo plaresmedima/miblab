@@ -3,8 +3,9 @@
 .. currentmodule:: {{ module }}
 
 .. autoclass:: {{ objname }}
-   :members:                                                    
-   :inherited-members: 
+   :members:     
+   :undoc-members:                                               
+   :no-inherited-members: 
 
    {% block attributes %}
    {% if attributes %}

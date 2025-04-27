@@ -4,10 +4,10 @@
    :maxdepth: 2
    :hidden:
    
-   pypa
+   packages
    data
    pipelines
-   dl_models
+   models
    reference/index
    projects
    contribute/index

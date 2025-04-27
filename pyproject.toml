@@ -50,6 +50,9 @@ requires-python = ">=3.6"
 report = [
   'pylatex',
 ]
+data = [
+  'requests',
+]
 
 [tool.setuptools]
 # ...

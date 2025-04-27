@@ -132,6 +132,11 @@ class Report(pl.Document):
             department='Section of Medical Imaging and Technologies',
             email='s.sourbron@sheffield.ac.uk',      
         ):
+        if import_error:
+            raise NotImplementedError(
+                'Please install miblab as pip install miblab[report]'
+                'to use this function.'
+            )
         super().__init__()
         self.path = reportpath
         setup(

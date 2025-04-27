@@ -16,4 +16,5 @@ reports, or deploying pipelines.
    :maxdepth: 2
 
    reporting
+   data
    

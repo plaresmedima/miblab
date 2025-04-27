@@ -16,15 +16,15 @@ DOI = {
 # miblab datasets
 DATASETS = {
     'KRUK.dmr.zip': {'doi': DOI['MRR']},
-    'tristan_humans_healthy_ciclosporin.dmr.zip': {'doi': DOI['MRR']},
-    'tristan_humans_healthy_controls_leeds.dmr.zip': {'doi': DOI['MRR']},
-    'tristan_humans_healthy_controls_sheffield.dmr.zip': {'doi': DOI['MRR']},
-    'tristan_humans_healthy_metformin.dmr.zip': {'doi': DOI['MRR']},
-    'tristan_humans_healthy_rifampicin.dmr.zip': {'doi': DOI['MRR']},
-    'tristan_humans_patients_rifampicin.dmr.zip': {'doi': DOI['MRR']},
-    'tristan_rats_healthy_multiple_dosing.dmr.zip': {'doi': DOI['MRR']},
-    'tristan_rats_healthy_reproducibility.dmr.zip': {'doi': DOI['MRR']},
-    'tristan_rats_healthy_six_drugs.dmr.zip': {'doi': DOI['MRR']},
+    'tristan_humans_healthy_ciclosporin.dmr.zip': {'doi': DOI['TRISTAN']},
+    'tristan_humans_healthy_controls_leeds.dmr.zip': {'doi': DOI['TRISTAN']},
+    'tristan_humans_healthy_controls_sheffield.dmr.zip': {'doi': DOI['TRISTAN']},
+    'tristan_humans_healthy_metformin.dmr.zip': {'doi': DOI['TRISTAN']},
+    'tristan_humans_healthy_rifampicin.dmr.zip': {'doi': DOI['TRISTAN']},
+    'tristan_humans_patients_rifampicin.dmr.zip': {'doi': DOI['TRISTAN']},
+    'tristan_rats_healthy_multiple_dosing.dmr.zip': {'doi': DOI['TRISTAN']},
+    'tristan_rats_healthy_reproducibility.dmr.zip': {'doi': DOI['TRISTAN']},
+    'tristan_rats_healthy_six_drugs.dmr.zip': {'doi': DOI['TRISTAN']},
 }
 
 
@@ -95,9 +95,9 @@ def zenodo_fetch(dataset:str, folder:str, doi:str=None, filename:str=None):
     else:
         file = os.path.join(folder, filename)
 
-    if os.path.exists(filename):
+    if os.path.exists(file):
         raise ValueError(
-            f"Cannot write to {filename}. The file already exists. "
+            f"Cannot write to {file}. The file already exists. "
             f"Please provide another filename or folder."
         )
         

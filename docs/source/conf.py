@@ -10,7 +10,7 @@ from pathlib import Path
 project = 'miblab'
 copyright = '2025, miblab contributors'
 author = 'miblab contributors'
-release = '0.0.3'
+release = '0.0.4'
 
 # -- Path setup --------------------------------------------------------------
 # If extensions (or modules to document with autodoc) are in another directory,

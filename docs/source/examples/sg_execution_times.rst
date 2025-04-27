@@ -1,12 +1,12 @@
 
 :orphan:
 
-.. _sphx_glr_generated_examples_sg_execution_times:
+.. _sphx_glr_examples_sg_execution_times:
 
 
 Computation times
 =================
-**00:00.000** total execution time for 0 files **from generated\examples**:
+**00:00.000** total execution time for 0 files **from examples**:
 
 .. container::
 

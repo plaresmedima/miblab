@@ -10,7 +10,7 @@ from pathlib import Path
 project = 'miblab'
 copyright = '2025, miblab contributors'
 author = 'miblab contributors'
-release = '0.0.3'
+release = '0.0.4'
 
 # -- Path setup --------------------------------------------------------------
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -67,10 +67,10 @@ sphinx_gallery_conf = {
     'examples_dirs': '../examples',   
 
     # path to where to save gallery generated output
-    'gallery_dirs': 'generated/examples',  
+    'gallery_dirs': 'examples',  
     
     # directory where function/class granular galleries are stored
-    'backreferences_dir': 'generated/backreferences',
+    'backreferences_dir': 'backreferences',
 
     # Modules for which function/class level galleries are created. 
     'doc_module': ('miblab', ),
@@ -135,7 +135,10 @@ html_theme = 'pydata_sphinx_theme'
 html_theme_options = {
     "github_url": "https://github.com/openmiblab/miblab",
     "collapse_navigation": True,
-    }
+    "analytics": {
+        "google_analytics_id": "G-62S7WYNRKR",
+    },
+}
 
 # Add any paths that contain custom static files (such as style sheets) here, relative to this directory. They are copied after the builtin static files, so a file named "default.css" will overwrite the builtin "default.css"
 html_static_path = ['_static']

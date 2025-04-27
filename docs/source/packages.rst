@@ -65,6 +65,24 @@ Python packages developed and maintained by miblab.
             To the **vreg** documentation
 
     .. grid-item-card::
+        :img-top: ../source/_static/pydmr-banner.png
+        :text-align: center
+
+        **pydmr**
+        ^^^
+
+        A python interface for the dmr data format.
+
+        +++
+
+        .. button-link:: https://openmiblab.github.io/pydmr/
+            :expand:
+            :color: secondary
+            :click-parent:
+
+            To the **pydmr** documentation
+
+    .. grid-item-card::
         :img-top: ../source/_static/dbdicom-banner.png
         :text-align: center
 

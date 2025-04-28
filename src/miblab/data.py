@@ -29,7 +29,10 @@ DATASETS = {
 
 
 def zenodo_fetch(dataset:str, folder:str, doi:str=None, filename:str=None):
-    """Download a dataset from Zenodo
+    """Download a dataset from Zenodo.
+
+    Note if a dataset already exists locally it will not be downloaded 
+    again and the existing file will be returned. 
 
     Args:
         dataset (str): Name of the dataset
@@ -55,6 +58,16 @@ def zenodo_fetch(dataset:str, folder:str, doi:str=None, filename:str=None):
             'Please install miblab as pip install miblab[data]'
             'to use this function.'
         )
+        
+    # Create filename 
+    if filename is None:
+        file = os.path.join(folder, dataset)
+    else:
+        file = os.path.join(folder, filename)
+
+    # If it is already downloaded, use that.
+    if os.path.exists(file):
+        return file
     
     # Get DOI
     if doi is None:
@@ -89,18 +102,6 @@ def zenodo_fetch(dataset:str, folder:str, doi:str=None, filename:str=None):
     if not os.path.exists(folder):
         os.makedirs(folder)
 
-    # Save the file locally 
-    if filename is None:
-        file = os.path.join(folder, dataset)
-    else:
-        file = os.path.join(folder, filename)
-
-    if os.path.exists(file):
-        raise ValueError(
-            f"Cannot write to {file}. The file already exists. "
-            f"Please provide another filename or folder."
-        )
-        
     with open(file, 'wb') as f:
         f.write(file_response.content)
 

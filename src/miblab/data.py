@@ -9,16 +9,15 @@ except:
 # Zenodo DOI of the repository
 # DOIs need to be updated when new versions are created
 DOI = {
-    'MRR': "15285017",      # v0.0.3
-    'TRISTAN': "15285027"   # v0.0.1
+    'MRR': "15285017",    
+    'TRISTAN': "15301607", 
 }
 
 # miblab datasets
 DATASETS = {
     'KRUK.dmr.zip': {'doi': DOI['MRR']},
+    'tristan_humans_healthy_controls.dmr.zip': {'doi': DOI['TRISTAN']},
     'tristan_humans_healthy_ciclosporin.dmr.zip': {'doi': DOI['TRISTAN']},
-    'tristan_humans_healthy_controls_leeds.dmr.zip': {'doi': DOI['TRISTAN']},
-    'tristan_humans_healthy_controls_sheffield.dmr.zip': {'doi': DOI['TRISTAN']},
     'tristan_humans_healthy_metformin.dmr.zip': {'doi': DOI['TRISTAN']},
     'tristan_humans_healthy_rifampicin.dmr.zip': {'doi': DOI['TRISTAN']},
     'tristan_humans_patients_rifampicin.dmr.zip': {'doi': DOI['TRISTAN']},

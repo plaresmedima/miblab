@@ -9,16 +9,15 @@ except:
 # Zenodo DOI of the repository
 # DOIs need to be updated when new versions are created
 DOI = {
-    'MRR': "15285017",      # v0.0.3
-    'TRISTAN': "15285027"   # v0.0.1
+    'MRR': "15285017",    
+    'TRISTAN': "15301607", 
 }
 
 # miblab datasets
 DATASETS = {
     'KRUK.dmr.zip': {'doi': DOI['MRR']},
+    'tristan_humans_healthy_controls.dmr.zip': {'doi': DOI['TRISTAN']},
     'tristan_humans_healthy_ciclosporin.dmr.zip': {'doi': DOI['TRISTAN']},
-    'tristan_humans_healthy_controls_leeds.dmr.zip': {'doi': DOI['TRISTAN']},
-    'tristan_humans_healthy_controls_sheffield.dmr.zip': {'doi': DOI['TRISTAN']},
     'tristan_humans_healthy_metformin.dmr.zip': {'doi': DOI['TRISTAN']},
     'tristan_humans_healthy_rifampicin.dmr.zip': {'doi': DOI['TRISTAN']},
     'tristan_humans_patients_rifampicin.dmr.zip': {'doi': DOI['TRISTAN']},
@@ -29,7 +28,10 @@ DATASETS = {
 
 
 def zenodo_fetch(dataset:str, folder:str, doi:str=None, filename:str=None):
-    """Download a dataset from Zenodo
+    """Download a dataset from Zenodo.
+
+    Note if a dataset already exists locally it will not be downloaded 
+    again and the existing file will be returned. 
 
     Args:
         dataset (str): Name of the dataset
@@ -55,6 +57,16 @@ def zenodo_fetch(dataset:str, folder:str, doi:str=None, filename:str=None):
             'Please install miblab as pip install miblab[data]'
             'to use this function.'
         )
+        
+    # Create filename 
+    if filename is None:
+        file = os.path.join(folder, dataset)
+    else:
+        file = os.path.join(folder, filename)
+
+    # If it is already downloaded, use that.
+    if os.path.exists(file):
+        return file
     
     # Get DOI
     if doi is None:
@@ -89,18 +101,6 @@ def zenodo_fetch(dataset:str, folder:str, doi:str=None, filename:str=None):
     if not os.path.exists(folder):
         os.makedirs(folder)
 
-    # Save the file locally 
-    if filename is None:
-        file = os.path.join(folder, dataset)
-    else:
-        file = os.path.join(folder, filename)
-
-    if os.path.exists(file):
-        raise ValueError(
-            f"Cannot write to {file}. The file already exists. "
-            f"Please provide another filename or folder."
-        )
-        
     with open(file, 'wb') as f:
         f.write(file_response.content)
 

@@ -56,8 +56,10 @@ class Report(pl.Document):
 
     Parameters
     ----------
-    reportpath : str
+    folder : str
         Path to the folder where the report should be saved.
+    filename : str
+        Name of the report (without the .pdf extension).
     title : str
         The title of the report.
     subtitle : str  
@@ -121,7 +123,8 @@ class Report(pl.Document):
 
     def __init__(
             self,
-            reportpath,
+            folder,
+            filename='miblab_report',
             title='MIBLAB report', 
             subtitle='Subtitle', 
             subject='Subject',
@@ -138,9 +141,10 @@ class Report(pl.Document):
                 'to use this function.'
             )
         super().__init__()
-        self.path = reportpath
+        self.folder = folder
+        self.filename = filename
         setup(
-            self, reportpath, title, subtitle, subject, author,
+            self, folder, filename, title, subtitle, subject, author,
             affiliation, contact, institute, department, email,
         )
 
@@ -202,115 +206,46 @@ class Report(pl.Document):
         table(self, file, cwidth, caption)
 
 
-    def build(self, filename='report'):
-        """Create the report.
-
-        Parameters
-        ----------
-        filename (str, optional): str
-            The name of the report. Defaults to 'report
+    def build(self):
+        """Create the pdf report.
 
         Raises
         ------
         NotImplementedError
             If miblab is not installed.
         """
-        build(self, self.path, filename)
+        build(self, self.folder, self.filename)
 
 
 
 
 def setup(
-        doc : pl.Document,
-        reportpath,
-        title='MIBLAB report', 
-        subtitle='Subtitle', 
-        subject='Subject',
-        author='miblab.org',
-        affiliation='https://miblab.org',  
-        contact='Steven Sourbron',
-        institute='University of Sheffield',
-        department='Section of Medical Imaging and Technologies',
-        email='s.sourbron@sheffield.ac.uk',       
+        doc:pl.Document, folder, filename, title, subtitle, subject, 
+        author, affiliation, contact, institute, department, email,     
     ):
-    """Setup the report document.
-    
-    Parameters
-    ----------
-    doc : pylatex.Document
-    reportpath : str
-        Path to the folder where the report should be saved.
-    title : str
-        The title of the report.
-    subtitle : str  
-        The subtitle of the report.
-    subject : str
-        The subject of the report.
-    author : str
-        The author of the report.
-    affiliation : str
-        The affiliation of the author.
-    contact : str
-        The contact person for the report.
-    institute : str
-        The institute of the author.
-    department : str
-        The department of the author.
-    email : str
-        The email of the author.
-        
-    Returns
-    -------             
-    doc : pylatex.Document
-        The report document.
-    """
     if import_error:
         raise NotImplementedError(
             'Please install miblab as pip install miblab[report]'
             'to use this function.'
         )
     dst = os.path.abspath("")
-    outputpath = os.path.join(reportpath, 'report')
+    outputpath = os.path.join(folder, filename + '_source')
     force_copy(cover, os.path.join(dst, 'cover.jpg'))
     force_copy(epflreport, os.path.join(dst, 'epflreport.cls'))
     force_copy_dir(layout._paths[0], os.path.join(outputpath, 'layout'))
-    #doc = pl.Document()
-    #doc = Report()
+
     doc.documentclass = pl.Command('documentclass',"epflreport")
     makecover(doc, title, subtitle, subject, author, affiliation)
-    titlepage(doc, reportpath, contact, institute, department, email)
+    titlepage(doc, folder, filename, contact, institute, department, email)
 
     doc.append(pl.NewPage())
     doc.append(NoEscape('\\tableofcontents'))
     doc.append(NoEscape('\\mainmatter'))
-    #return doc
 
 
 def makecover(
-        doc: pl.Document, 
-        title='MIBLAB report', 
-        subtitle='Subtitle', 
-        subject='Subject',
-        author='miblab.org',
-        affiliation='https://miblab.org',  
+        doc:pl.Document, title, subtitle, subject, author, affiliation 
     ):
-    """Add a cover page to the report.
-    
-    Parameters
-    ----------
-    doc : pylatex.Document
-        The report document.
-    title : str
-        The title of the report.
-    subtitle : str  
-        The subtitle of the report.
-    subject : str
-        The subject of the report.
-    author : str
-        The author of the report.
-    affiliation : str
-        The affiliation of the author.
-    """
     if import_error:
         raise NotImplementedError(
             'Please install miblab as pip install miblab[report]'
@@ -328,36 +263,9 @@ def makecover(
 
 
 def titlepage(
-        doc:pl.Document, 
-        reportpath,
-        contact='Steven Sourbron',
-        institute='University of Sheffield',
-        department='Section of Medical Imaging and Technologies',
-        email='s.sourbron@sheffield.ac.uk',
+        doc:pl.Document, folder, filename, contact, institute, 
+        department, email,
     ):
-    """Add a title page to the report.
-
-    Parameters
-    ----------
-    doc : pylatex.Document
-        The report document.
-    reportpath : str
-        Path to the folder where the report should be saved.
-    contact : str
-        The contact person for the report.
-    institute : str
-        The institute of the author.
-    department : str
-        The department of the author.
-    email : str
-        The email of the author.
-
-    Raises
-    ------
-    NotImplementedError
-        If miblab is not installed.
-    """
-
     if import_error:
         raise NotImplementedError(
             'Please install miblab as pip install miblab[report]'
@@ -408,7 +316,7 @@ def titlepage(
     # TRISTAN logo
     with doc.create(pl.Figure(position='b!')) as pic:
         pic.append(pl.Command('centering'))
-        im = os.path.join(reportpath, 'report', 'layout', 'tristan-logo.jpg')
+        im = os.path.join(folder, filename + '_source', 'layout', 'tristan-logo.jpg')
         pic.add_image(im, width='2in')
     doc.append(pl.Command('end', 'center'))
     doc.append(pl.Command('end', 'titlepage'))
@@ -510,34 +418,15 @@ def table(doc, file, cwidth=None, caption=None):
             table.append(NoEscape(r'\caption{'+caption+r'} \\'))
 
 
-def build(
-        doc: pl.Document, 
-        reportpath,
-        filename='report',  
-    ):
-    """Create the report.
+def build(doc: pl.Document, folder, filename):
 
-    Parameters
-    ----------
-    doc : pylatex.Document
-        The report document.
-    reportpath : str
-        Path to the folder where the report should be saved.
-    filename (str, optional): str
-        The name of the report. Defaults to 'report
-
-    Raises
-    ------
-    NotImplementedError
-        If miblab is not installed.
-    """
     if import_error:
         raise NotImplementedError(
             'Please install miblab as pip install miblab[report]'
             'to use this function.')
     path = os.path.abspath("")
     # Create report
-    outputpath = os.path.join(reportpath, 'report')
+    outputpath = os.path.join(folder, filename + '_source')
     if not os.path.exists(outputpath):
         os.makedirs(outputpath)
     
@@ -562,5 +451,9 @@ def build(
     force_move(os.path.join(path, 'cover.jpg'), os.path.join(outputpath, 'cover.jpg'))
     force_move(os.path.join(path, 'epflreport.cls'), os.path.join(outputpath, 'epflreport.cls'))
     force_move(os.path.join(path, filename+'.tex'), os.path.join(outputpath, filename+'.tex'))
+
+    # Move pdf to top report folder
+    force_move(os.path.join(outputpath, filename+'.pdf'), os.path.join(folder, filename+'.pdf'))
+
 
 

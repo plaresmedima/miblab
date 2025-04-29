@@ -1,25 +1,16 @@
 import os
-
-try:
-    import requests
-    import_error = False
-except:
-    import_error = True
-
-try:
-    from osfclient.api import OSF
-except ImportError:
-    OSF = None
-
-try:
-    from tqdm import tqdm
-except ImportError:
-    tqdm = None
-
 import zipfile
 
+# Try importing optional dependencies
+try:
+    import requests
+    from osfclient.api import OSF
+    from tqdm import tqdm
+    import_error = False
+except ImportError:
+    import_error = True
+
 # Zenodo DOI of the repository
-# DOIs need to be updated when new versions are created
 DOI = {
     'MRR': "15285017",      # v0.0.3
     'TRISTAN': "15285027"   # v0.0.1
@@ -39,9 +30,11 @@ DATASETS = {
     'tristan_rats_healthy_six_drugs.dmr.zip': {'doi': DOI['TRISTAN']},
 }
 
+def zenodo_fetch(dataset:str, folder:str, doi:str=None, filename:str=None):
+    """Download a dataset from Zenodo.
 
-def zenodo_fetch(dataset: str, folder: str, doi: str = None, filename: str = None):
-    """Download a dataset from Zenodo
+    Note if a dataset already exists locally it will not be downloaded 
+    again and the existing file will be returned. 
 
     Args:
         dataset (str): Name of the dataset
@@ -65,8 +58,18 @@ def zenodo_fetch(dataset: str, folder: str, doi: str = None, filename: str = Non
     if import_error:
         raise NotImplementedError(
             'Please install miblab as pip install miblab[data]'
-            ' to use this function.'
+            'to use this function.'
         )
+        
+    # Create filename 
+    if filename is None:
+        file = os.path.join(folder, dataset)
+    else:
+        file = os.path.join(folder, filename)
+
+    # If it is already downloaded, use that.
+    if os.path.exists(file):
+        return file
     
     # Get DOI
     if doi is None:
@@ -101,93 +104,67 @@ def zenodo_fetch(dataset: str, folder: str, doi: str = None, filename: str = Non
     if not os.path.exists(folder):
         os.makedirs(folder)
 
-    # Save the file locally 
-    if filename is None:
-        file = os.path.join(folder, dataset)
-    else:
-        file = os.path.join(folder, filename)
-
-    if os.path.exists(file):
-        raise ValueError(
-            f"Cannot write to {file}. The file already exists. "
-            f"Please provide another filename or folder."
-        )
-        
     with open(file, 'wb') as f:
         f.write(file_response.content)
 
     return file
 
-
-def osf_fetch(project_id: str, folder: str, path: list = [], token: str = None, extract: bool = True, verbose: bool = True):
-    """Download a dataset from OSF (Open Science Framework)
+def osf_fetch(folder: str, dataset: str = "", project_id: str = "un5ct", token: str = None, extract: bool = True, verbose: bool = True):
+    """Download a dataset from OSF (Open Science Framework).
 
     Args:
-        project_id (str): OSF project ID (e.g., 'un5ct')
         folder (str): Local folder where to save the dataset
-        path (list, optional): Subfolders inside project (default empty)
+        dataset (str, optional): Subfolder path inside project (default "")
+        project_id (str, optional): OSF project ID (default "un5ct")
         token (str, optional): Personal OSF token if private access needed
         extract (bool, optional): Whether to unzip .zip files (default True)
         verbose (bool, optional): Whether to print progress (default True)
-
-    Raises:
-        ImportError: If osfclient or tqdm not installed
-        FileNotFoundError: If folder not found
-
-    Example (public project):
-        >>> from miblab.data import osf_fetch
-        >>> osf_fetch(
-        ...     project_id='un5ct',
-        ...     folder='/path/to/save',
-        ...     path=['TRISTAN', 'RAT', 'bosentan_highdose', 'Sanofi', 'Day_1']
-        ... )
-
-    Example (private project with token):
-        >>> from miblab.data import osf_fetch
-        >>> osf_fetch(
-        ...     project_id='abcde',
-        ...     folder='/path/to/save',
-        ...     token='your-osf-access-token',
-        ...     path=['private', 'dataset', 'folder']
-        ... )
-
     """
-    if OSF is None:
-        raise ImportError("Please install osfclient: pip install osfclient")
-    if tqdm is None:
-        raise ImportError("Please install tqdm: pip install tqdm")
+    if import_error:
+        raise NotImplementedError(
+            "Please install miblab as pip install miblab[data] to use this function."
+        )
 
+    # Prepare local folder
     os.makedirs(folder, exist_ok=True)
 
-    osf = OSF(token=token)
+    # Connect to OSF and locate project storage
+    osf = OSF(token=token)  #osf = OSF()  for public projects
     project = osf.project(project_id)
     storage = project.storage('osfstorage')
 
+    # Navigate the dataset folder if provided
     current = storage
-    for part in path:
-        for f in current.folders:
-            if f.name == part:
-                current = f
-                break
-        else:
-            raise FileNotFoundError(f"Folder '{part}' not found in {'/'.join(path)}")
+    if dataset:
+        parts = dataset.strip('/').split('/')
+        for part in parts:
+            for f in current.folders:
+                if f.name == part:
+                    current = f
+                    break
+            else:
+                raise FileNotFoundError(f"Folder '{part}' not found when navigating path '{dataset}'.")
 
+    # Recursive download of all files and folders
     def download(current_folder, local_folder):
         os.makedirs(local_folder, exist_ok=True)
-        for file in current_folder.files:
+        files = list(current_folder.files)
+        iterator = tqdm(files, desc=f"Downloading to {local_folder}") if verbose and files else files
+        for file in iterator:
             local_file = os.path.join(local_folder, file.name)
-            print(f"Downloading {file.name}...")
             try:
                 with open(local_file, 'wb') as f:
                     file.write_to(f)
             except Exception as e:
-                print(f"Warning downloading {file.name}: {e}")
+                if verbose:
+                    print(f"Warning downloading {file.name}: {e}")
 
         for subfolder in current_folder.folders:
             download(subfolder, os.path.join(local_folder, subfolder.name))
 
     download(current, folder)
 
+    # Extract all downloaded zip files if needed
     if extract:
         for dirpath, _, filenames in os.walk(folder):
             for filename in filenames:

@@ -1,39 +1,33 @@
 import os
 import shutil
-from miblab.data import osf_fetch
+from miblab import osf_fetch  # Updated import path per review
 
 def test_osf_fetch():
     # Set test parameters
+    dataset = "TRISTAN/RAT/bosentan_highdose/Sanofi"  # Example dataset
     folder = "test_download"
-    dataset = "TRISTAN/RAT/bosentan_highdose/Sanofi"  # If empty, will download everything
-    project_id = "un5ct"  # Public project for default test
+    project_id = "un5ct"  # Public OSF project
+    token = os.getenv('OSF_TOKEN')  # Optional: for private projects
 
-    # Optional: Token for private project test
-    token = os.getenv('OSF_TOKEN')  # Read token from environment variable if available
-
-    # Clean up before running
+    # Clean up before test
     if os.path.exists(folder):
         shutil.rmtree(folder)
 
     # Run osf_fetch
     try:
-        print(f"Testing osf_fetch with dataset '{dataset}' (token={'provided' if token else 'not provided'})...")
-        osf_fetch(folder=folder, dataset=dataset, project_id=project_id, token=token, extract=True, verbose=True)
+        print(f"Testing osf_fetch with dataset='{dataset}' and token={'provided' if token else 'not provided'}")
+        osf_fetch(dataset=dataset, folder=folder, project_id=project_id, token=token, extract=True, verbose=True)
     except Exception as e:
-        print(f"Test failed with error: {e}")
-        return
+        assert False, f"osf_fetch raised an exception: {e}"
 
-    # Check that something got downloaded
-    if not os.path.exists(folder):
-        print("Test failed: folder not created.")
-    elif not any(os.scandir(folder)):
-        print("Test failed: no files downloaded.")
-    else:
-        print("Test passed: files downloaded successfully.")
+    # Assertions (pytest-compatible)
+    assert os.path.exists(folder), "Folder was not created"
+    assert any(os.scandir(folder)), "No files were downloaded"
 
-    # Clean up after test (optional: comment out if you want to inspect)
+    # Leave folder for inspection (optional)
+    print(f"Test passed. Downloaded files are in: {folder}")
+    # To auto-cleanup after the test, uncomment below:
     # shutil.rmtree(folder)
-    print(f"Test folder left at: {folder}")
 
 if __name__ == "__main__":
     test_osf_fetch()

@@ -6,7 +6,7 @@ def test_osf_fetch():
     # Set test parameters
     dataset = "TRISTAN/RAT/bosentan_highdose/Sanofi"  # Example dataset
     folder = "test_download"
-    project_id = "un5ct"  # Public OSF project
+    project = "un5ct"  # Public OSF project
     token = os.getenv('OSF_TOKEN')  # Optional: for private projects
 
     # Clean up before test
@@ -16,7 +16,7 @@ def test_osf_fetch():
     # Run osf_fetch
     try:
         print(f"Testing osf_fetch with dataset='{dataset}' and token={'provided' if token else 'not provided'}")
-        osf_fetch(dataset=dataset, folder=folder, project_id=project_id, token=token, extract=True, verbose=True)
+        osf_fetch(dataset=dataset, folder=folder, project=project, token=token, extract=True, verbose=True)
     except Exception as e:
         assert False, f"osf_fetch raised an exception: {e}"
 
@@ -28,6 +28,7 @@ def test_osf_fetch():
     print(f"Test passed. Downloaded files are in: {folder}")
     # To auto-cleanup after the test, uncomment below:
     # shutil.rmtree(folder)
+
 
 if __name__ == "__main__":
     test_osf_fetch()

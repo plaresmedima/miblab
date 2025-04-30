@@ -2,3 +2,4 @@ importlib-resources>=1.1.0
 pylatex
 requests
 osfclient
+tqdm

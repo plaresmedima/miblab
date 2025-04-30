@@ -108,7 +108,7 @@ def zenodo_fetch(dataset:str, folder:str, doi:str=None, filename:str=None):
 
     return file
 
-def osf_fetch(dataset: str, folder: str, project_id: str = "un5ct", token: str = None, extract: bool = True, verbose: bool = True):
+def osf_fetch(dataset: str, folder: str, project: str = "un5ct", token: str = None, extract: bool = True, verbose: bool = True):
     """
     Download a dataset from OSF (Open Science Framework).
 
@@ -118,7 +118,7 @@ def osf_fetch(dataset: str, folder: str, project_id: str = "un5ct", token: str =
     Args:
         dataset (str): Subfolder path inside the OSF project. If an empty string, all files in the root will be downloaded (use with caution).
         folder (str): Local folder where the dataset will be saved.
-        project_id (str, optional): OSF project ID (default is "un5ct").
+        project (str, optional): OSF project ID (default is "un5ct").
         token (str, optional): Personal OSF token for accessing private projects. Read from OSF_TOKEN environment variable if needed.
         extract (bool, optional): Whether to automatically unzip downloaded .zip files (default is True).
         verbose (bool, optional): Whether to print progress messages (default is True).
@@ -131,7 +131,7 @@ def osf_fetch(dataset: str, folder: str, project_id: str = "un5ct", token: str =
         str: Path to the local folder containing the downloaded data.
 
     Example:
-        >>> from miblab.data import osf_fetch
+        >>> from miblab import osf_fetch
         >>> osf_fetch('TRISTAN/RAT/bosentan_highdose/Sanofi', 'test_download')
     """
     if import_error:
@@ -144,7 +144,7 @@ def osf_fetch(dataset: str, folder: str, project_id: str = "un5ct", token: str =
 
     # Connect to OSF and locate project storage
     osf = OSF(token=token)  #osf = OSF()  for public projects
-    project = osf.project(project_id)
+    project = osf.project(project)
     storage = project.storage('osfstorage')
 
     # Navigate the dataset folder if provided

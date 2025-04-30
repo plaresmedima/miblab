@@ -4,10 +4,9 @@ from miblab import osf_fetch  # Updated import path per review
 
 def test_osf_fetch():
     # Set test parameters
-    dataset = "TRISTAN/RAT/bosentan_highdose/Sanofi"  # Example dataset
+    dataset = "Challenge_Guideline"  # Example dataset
     folder = "test_download"
-    project = "un5ct"  # Public OSF project
-    token = os.getenv('OSF_TOKEN')  # Optional: for private projects
+    project_id = "u7a6f"  # Public OSF project
 
     # Clean up before test
     if os.path.exists(folder):
@@ -15,8 +14,8 @@ def test_osf_fetch():
 
     # Run osf_fetch
     try:
-        print(f"Testing osf_fetch with dataset='{dataset}' and token={'provided' if token else 'not provided'}")
-        osf_fetch(dataset=dataset, folder=folder, project=project, token=token, extract=True, verbose=True)
+        print(f"Testing osf_fetch with dataset='{dataset}' from public OSF project '{project_id}'")
+        osf_fetch(dataset=dataset, folder=folder, project=project_id, extract=True, verbose=True)
     except Exception as e:
         assert False, f"osf_fetch raised an exception: {e}"
 
@@ -28,7 +27,6 @@ def test_osf_fetch():
     print(f"Test passed. Downloaded files are in: {folder}")
     # To auto-cleanup after the test, uncomment below:
     # shutil.rmtree(folder)
-
 
 if __name__ == "__main__":
     test_osf_fetch()

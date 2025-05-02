@@ -26,7 +26,7 @@ def test_osf_fetch():
     # Leave folder for inspection (optional)
     print(f"Test passed. Downloaded files are in: {folder}")
     # To auto-cleanup after the test, uncomment below:
-    # shutil.rmtree(folder)
+    shutil.rmtree(folder)
 
 if __name__ == "__main__":
     test_osf_fetch()

@@ -41,5 +41,5 @@ License
 Released under the `Apache 2.0 <https://opensource.org/licenses/Apache-2.0>`_  
 license::
 
-  Copyright (C) 2025 pydmr developers
+  Copyright (C) 2025 miblab developers
 

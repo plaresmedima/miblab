@@ -34,7 +34,8 @@ imaging biomarkers*
 
 **Links**:
 `Github organization <https://github.com/openmiblab>`_ |
-`Zenodo community <https://zenodo.org/communities/miblab>`_ 
+`Zenodo community <https://zenodo.org/communities/miblab>`_ |
+`OSF project <https://osf.io/un5ct/>`_ 
 
 
 *******

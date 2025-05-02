@@ -9,6 +9,7 @@ name = "miblab"
 version = "0.0.5"
 dependencies = [
   'importlib-resources>=1.1.0',
+  'tqdm', 
 ]
 # optional information
 description = "Resources of the open laboratory for medical imaging biomarkers"
@@ -52,6 +53,7 @@ report = [
 ]
 data = [
   'requests',
+  'osfclient', 
 ]
 
 [tool.setuptools]

@@ -6,4 +6,5 @@ Data
 
 
 .. autofunction:: miblab.zenodo_fetch
+.. autofunction:: miblab.osf_fetch
    

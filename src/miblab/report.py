@@ -182,7 +182,7 @@ class Report(pl.Document):
         subsection(self, title, clearpage)
 
 
-    def figure(self, file, width='6in', caption=None):
+    def figure(self, file, width='6in', caption=None, clearpage=False):
         """Add a figure to the report.
 
         Args:
@@ -190,10 +190,10 @@ class Report(pl.Document):
             width (str, optional): Figure width. Defaults to '6in'.
             caption (str, optional): Caption for the figure. Defaults to None.
         """
-        figure(self, file, width, caption)
+        figure(self, file, width, caption, clearpage)
 
 
-    def table(self, file, cwidth=None, caption=None):
+    def table(self, file, cwidth=None, caption=None, clearpage=False):
         """Add a table to the report.
         
         The table is created from a csv file. The first row is used as the header.
@@ -203,7 +203,7 @@ class Report(pl.Document):
             cwidth (str, optional): Column width. Defaults to None (automaticaly chosen).
             caption (str, optional): Caption for the table. Defaults to None.
         """
-        table(self, file, cwidth, caption)
+        table(self, file, cwidth, caption, clearpage)
 
 
     def build(self):
@@ -359,7 +359,7 @@ def subsection(doc, title, clearpage=False):
     doc.append(pl.Subsection(title)) 
 
 
-def figure(doc, file, width='6in', caption=None):
+def figure(doc, file, width='6in', caption=None, clearpage=False):
     """Add a figure to the report.
 
     Args:
@@ -373,13 +373,15 @@ def figure(doc, file, width='6in', caption=None):
             f"Cannot insert figure.\n"
             f"Figure source file {file} does not exist."
         )
+    if clearpage:
+        doc.append(NoEscape('\\clearpage'))
     with doc.create(pl.Figure(position='h!')) as pic:
         pic.add_image(file, width=width)
         if caption is not None:
             pic.add_caption(caption)
 
 
-def table(doc, file, cwidth=None, caption=None):
+def table(doc, file, cwidth=None, caption=None, clearpage=False):
     """Add a table to the report.
     
     The table is created from a csv file. The first row is used as the header.
@@ -395,6 +397,8 @@ def table(doc, file, cwidth=None, caption=None):
             f"Cannot insert table.\n"
             f"Table source file {file} does not exist."
         )
+    if clearpage:
+        doc.append(NoEscape('\\clearpage'))
     with open(file, mode='r', newline='') as f:
         reader = csv.reader(f)
         header = next(reader)

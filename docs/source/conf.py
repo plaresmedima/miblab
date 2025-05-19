@@ -10,7 +10,7 @@ from pathlib import Path
 project = 'miblab'
 copyright = '2025, miblab contributors'
 author = 'miblab contributors'
-release = '0.0.5'
+release = '0.0.6'
 
 # -- Path setup --------------------------------------------------------------
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -142,6 +142,12 @@ html_theme_options = {
 
 # Add any paths that contain custom static files (such as style sheets) here, relative to this directory. They are copied after the builtin static files, so a file named "default.css" will overwrite the builtin "default.css"
 html_static_path = ['_static']
+
+# Add anyc CSS files placed in _static here so they can be found when building the documentation
+
+html_css_files = [
+    'teams.css', # templates for the teams mosaic in About
+]
 
 # The suffix(es) of source filenames.
 source_suffix = ['.rst', '.md']

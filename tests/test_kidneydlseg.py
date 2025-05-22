@@ -1,6 +1,6 @@
 import dbdicom as db
 import numpy as np
-import miblab.kidney_pc_dixon as kidney_pc_dixon
+import miblab.kidneydlseg as kidneydlseg
 from src.miblab.data import zenodo_fetch
 import os
 import zipfile
@@ -36,7 +36,7 @@ def test_kidney_pc_dixon():
 
     array = np.stack((array_outphase, array_inphase, array_water, array_fat), axis=0)
 
-    mask = kidney_pc_dixon.kidney_pc_dixon(array)
+    mask = kidneydlseg.kidney_pc_dixon(array)
 
     assert np.sum(mask['leftkidney']) == 62284#
 

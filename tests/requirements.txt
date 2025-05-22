@@ -3,3 +3,4 @@ pytest-cov
 dbdicom <= 0.2.6
 torch
 monai
+dipy

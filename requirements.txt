@@ -5,3 +5,5 @@ requests
 osfclient
 vreg
 TotalSegmentator
+torch
+monai

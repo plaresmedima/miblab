@@ -1,2 +1,5 @@
 pytest
 pytest-cov
+dbdicom <= 0.2.6
+pytorch
+monai

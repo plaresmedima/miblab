@@ -19,4 +19,5 @@ To access these functions, miblab must be installed with the `dlseg` option:
 
 
 .. autofunction:: miblab.totseg
-   
+
+.. autofunction:: miblab.kidneydlseg

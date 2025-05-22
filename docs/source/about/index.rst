@@ -3,8 +3,6 @@ About
 #####
 
 
-*Coming soon..*
-
 ***********
 Maintainers
 ***********
@@ -14,4 +12,3 @@ Maintainers
 at the University of Sheffield, UK. 
 
 .. include:: teams.inc
-

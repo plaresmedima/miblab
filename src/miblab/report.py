@@ -49,8 +49,13 @@ def force_copy_dir(src, dst):
     shutil.copytree(src, dst)
 
 
+if import_error:
+    inherits_from = dict
+else:
+    inherits_from = pl.Document
 
-class Report(pl.Document):
+
+class Report(inherits_from):
     """
     Generate pdf reports in miblab style. 
 
@@ -220,7 +225,7 @@ class Report(pl.Document):
 
 
 def setup(
-        doc:pl.Document, folder, filename, title, subtitle, subject, 
+        doc:inherits_from, folder, filename, title, subtitle, subject, 
         author, affiliation, contact, institute, department, email,     
     ):
     if import_error:
@@ -244,7 +249,7 @@ def setup(
 
 
 def makecover(
-        doc:pl.Document, title, subtitle, subject, author, affiliation 
+        doc:inherits_from, title, subtitle, subject, author, affiliation 
     ):
     if import_error:
         raise NotImplementedError(
@@ -263,7 +268,7 @@ def makecover(
 
 
 def titlepage(
-        doc:pl.Document, folder, filename, contact, institute, 
+        doc:inherits_from, folder, filename, contact, institute, 
         department, email,
     ):
     if import_error:
@@ -422,7 +427,7 @@ def table(doc, file, cwidth=None, caption=None, clearpage=False):
             table.append(NoEscape(r'\caption{'+caption+r'} \\'))
 
 
-def build(doc: pl.Document, folder, filename):
+def build(doc: inherits_from, folder, filename):
 
     if import_error:
         raise NotImplementedError(

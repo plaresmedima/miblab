@@ -234,20 +234,26 @@ def osf_upload(folder: str, dataset: str, project: str = "un5ct", token: str = N
         ... )
     """
     import os
+
+    # Check that optional dependencies are installed
     if import_error:
         raise NotImplementedError("Please install miblab[data] to use this function.")
+
+    # Check that the specified local file exists
     if not os.path.isfile(folder):
         raise FileNotFoundError(f"Local file not found: {folder}")
 
+    # Authenticate and connect to the OSF project
     from osfclient.api import OSF
-
     osf = OSF(token=token)
     project = osf.project(project)
     storage = project.storage("osfstorage")
 
+    # Clean and prepare the remote dataset path
     full_path = dataset.strip("/")
-    existing = next((f for f in storage.files if f.path == "/" + full_path), None)
 
+    # Check if the file already exists on OSF
+    existing = next((f for f in storage.files if f.path == "/" + full_path), None)
     if existing:
         if overwrite:
             if verbose:
@@ -261,6 +267,7 @@ def osf_upload(folder: str, dataset: str, project: str = "un5ct", token: str = N
                 print(f"File '{full_path}' already exists. Skipping (overwrite=False).")
             return
 
+    # Upload the file
     size_mb = os.path.getsize(folder) / 1e6
     with open(folder, "rb") as f:
         if verbose:

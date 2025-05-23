@@ -6,3 +6,6 @@ from miblab.data import *
 
 from miblab import dlseg
 from miblab.dlseg import *
+
+import miblab.static
+import miblab.layout

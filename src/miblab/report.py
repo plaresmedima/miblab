@@ -2,6 +2,7 @@ import sys
 import os
 import shutil
 import csv
+from pathlib import Path
 
 try:
     import pylatex as pl
@@ -237,7 +238,8 @@ def setup(
     outputpath = os.path.join(folder, filename + '_source')
     force_copy(cover, os.path.join(dst, 'cover.jpg'))
     force_copy(epflreport, os.path.join(dst, 'epflreport.cls'))
-    force_copy_dir(layout._paths[0], os.path.join(outputpath, 'layout'))
+    #force_copy_dir(layout._paths[0], os.path.join(outputpath, 'layout'))
+    force_copy_dir(Path(layout), os.path.join(outputpath, 'layout'))
 
     doc.documentclass = pl.Command('documentclass',"epflreport")
     makecover(doc, title, subtitle, subject, author, affiliation)

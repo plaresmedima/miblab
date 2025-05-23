@@ -67,7 +67,7 @@ Run test suite and check test coverage
 --------------------------------------
 
 cd to /vreg top folder
->>> pytest --cov=vreg --cov-report term-missing
+>>> pytest --cov=miblab --cov-report term-missing
 
 To run a specific file (eg. test_utils) only, do:
 >>> pytest tests/test_utils.py --cov=vreg --cov-report term-missing

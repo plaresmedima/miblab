@@ -1,5 +1,6 @@
 import os
 import zipfile
+import subprocess
 
 # Try importing optional dependencies
 try:
@@ -198,5 +199,82 @@ def osf_fetch(dataset: str, folder: str, project: str = "un5ct", token: str = No
                     except Exception as e:
                         if verbose:
                             print(f"Warning unzipping {zip_path}: {e}")
-
     return folder
+
+def osf_upload(folder: str, dataset: str, project: str = "un5ct", token: str = None, verbose: bool = True, overwrite: bool = True):
+    """
+    Upload a file to OSF (Open Science Framework) using osfclient.
+
+    This function uploads a single local file to a specified path inside an OSF project.
+    Intermediate folders must already exist in the OSF project; osfclient does not create them.
+    If the file already exists, it can be overwritten or skipped.
+
+    Args:
+        folder (str): Path to the local file to upload.
+        dataset (str): OSF path where the file should be placed (e.g., "Testing/filename.txt").
+        project (str): OSF project ID (default: "un5ct").
+        token (str): OSF personal token for private/write access.
+        verbose (bool): Whether to print progress messages (default True).
+        overwrite (bool): Whether to replace an existing file if it already exists (default True).
+
+    Raises:
+        FileNotFoundError: If the file does not exist.
+        NotImplementedError: If osfclient is not installed.
+        RuntimeError: If upload fails for any reason.
+
+    Example:
+        >>> from miblab import osf_upload
+        >>> osf_upload(
+        ...     folder='data/results.csv',
+        ...     dataset='Testing/results.csv',
+        ...     project='un5ct',
+        ...     token='your-osf-token',
+        ...     verbose=True,
+        ...     overwrite=True
+        ... )
+    """
+    import os
+
+    # Check that optional dependencies are installed
+    if import_error:
+        raise NotImplementedError("Please install miblab[data] to use this function.")
+
+    # Check that the specified local file exists
+    if not os.path.isfile(folder):
+        raise FileNotFoundError(f"Local file not found: {folder}")
+
+    # Authenticate and connect to the OSF project
+    from osfclient.api import OSF
+    osf = OSF(token=token)
+    project = osf.project(project)
+    storage = project.storage("osfstorage")
+
+    # Clean and prepare the remote dataset path
+    full_path = dataset.strip("/")
+
+    # Check if the file already exists on OSF
+    existing = next((f for f in storage.files if f.path == "/" + full_path), None)
+    if existing:
+        if overwrite:
+            if verbose:
+                print(f"File '{full_path}' already exists. Deleting before re-upload...")
+            try:
+                existing.remove()
+            except Exception as e:
+                raise RuntimeError(f"Failed to delete existing file before overwrite: {e}")
+        else:
+            if verbose:
+                print(f"File '{full_path}' already exists. Skipping (overwrite=False).")
+            return
+
+    # Upload the file
+    size_mb = os.path.getsize(folder) / 1e6
+    with open(folder, "rb") as f:
+        if verbose:
+            print(f"Uploading '{os.path.basename(folder)}' ({size_mb:.2f} MB) to '{full_path}'...")
+        try:
+            storage.create_file(full_path, f)
+            if verbose:
+                print("Upload complete.")
+        except Exception as e:
+            raise RuntimeError(f"Failed to upload file: {e}")

@@ -9,3 +9,6 @@ from miblab.dlseg import *
 
 import miblab.static
 import miblab.layout
+
+from miblab import dlsegkidney
+from miblab.dlsegkidney import *

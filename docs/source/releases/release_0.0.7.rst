@@ -1,4 +1,4 @@
-miblab 0.0.6
+miblab 0.0.7
 ============
 
 Summary

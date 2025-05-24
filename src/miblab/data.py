@@ -127,7 +127,6 @@ def zenodo_fetch(dataset: str, folder: str, doi: str = None, filename: str = Non
     if os.path.exists(extract_to):
         if verbose:
             print(f"Skipping {file} extraction, folder {extract_to} already exists.")
-        os.remove(file)
         return extract_to
 
     # Perform extraction
@@ -140,7 +139,6 @@ def zenodo_fetch(dataset: str, folder: str, doi: str = None, filename: str = Non
             )
         zip_ref.extractall(extract_to)
 
-    os.remove(file)
     return extract_to
 
     

@@ -1,8 +1,17 @@
 import os
+import sys
 import numpy as np
 from miblab.data import zenodo_fetch
 from miblab.data import clear_cache_datafiles
 import scipy.ndimage as ndi
+
+if sys.version_info < (3, 9):
+    # importlib.resources either doesn't exist or lacks the files()
+    # function, so use the PyPI version:
+    import importlib_resources
+else:
+    # importlib.resources has files(), so use that:
+    import importlib.resources as importlib_resources
 
 try:
     from monai.networks.nets.unetr import UNETR
@@ -21,27 +30,42 @@ except ImportError:
 MODEL = 'UNETR_kidneys_v2.pth'
 MODEL_DOI = "14237436"
 
-def kidney_pc_dixon(input_array,overlap=0.3, postproc=True, clear_cache = False):
+
+def kidney_pc_dixon(input_array, overlap=0.3, postproc=True, clear_cache = False, verbose=False):
     
     """
-    Run MONAI UNETR from within Python to segment a single kidney on post-contrast Dixon images, including in-phase images, out-of-phase images, water maps, and fat maps.
-    This uses a UNETR-based model from MONAI, hosted on Zenodo (https://zenodo.org/records/14237436)
+    Segment individual kidneys on post-contrast Dixon images.
+     
+    This requires 4-channel input data with out-phase images, 
+    in-phase images, water maps, and fat maps.
+
+    This uses a pretrained UNETR-based model in MONAI, hosted on 
+    `Zenodo <https://zenodo.org/records/14237436>`_
+
     Args:
-        input_array (numpy.ndarray): A 4D NumPy array of shape [x, y, z, contrast] representing the input medical image volume.
+        input_array (numpy.ndarray): A 4D numpy array of shape 
+            [x, y, z, contrast] representing the input medical image 
+            volume. The last index must contain out-phase, in-phase, 
+            water and fat images, in that order.
+        overlap (float): defines the amount of overlap between 
+            adjacent sliding window patches during inference. A 
+            higher value (e.g., 0.5) improves prediction smoothness 
+            at patch borders but increases computation time.
+        postproc (bool): If True, applies post-processing to select 
+            the largest connected component from the UNETR output 
+            for each kidney mask
+        clear_cache: If True, the downloaded pth file is removed 
+            again after running the inference.
+        verbose (bool): If True, prints logging messages.
 
     Returns:
-        dict: A dictionary with the keys 'leftkidney' and 'rightkidney', each containing a NumPy array representing the respective kidney mask.
-
-    'overlap' defines the amount of overlap between adjacent sliding window patches during inference. A higher value (e.g., 0.5) improves prediction smoothness at patch 
-        borders but increases computation time.
-    'postproc': If True, applies post-processing to select the largest connected component from the UNETR output for each kidney mask
-
-    If post-processing is enabled, only the largest connected component of each kidney 
-    (left/right) is extracted from the UNETR output.
+        dict: A dictionary with the keys 'leftkidney' and 
+            'rightkidney', each containing a binary NumPy array 
+            representing the respective kidney mask.
     """
     if not torch_installed:
         raise ImportError(
-            'vreg is not installed. Please install it with "pip install vreg".'
+            'torch is not installed. Please install it with "pip install torch".'
             'To install all dlseg options at once, install miblab as pip install miblab[dlseg].'
         )
     if not monai_installed:
@@ -50,11 +74,14 @@ def kidney_pc_dixon(input_array,overlap=0.3, postproc=True, clear_cache = False)
             'To install all dlseg options at once, install miblab as pip install miblab[dlseg].'
         )
 
-    temp_dir = os.path.join(os.path.dirname(__file__), 'datafiles')
+    if verbose:
+        print('Downloading model..')
 
-    zenodo_fetch(MODEL, temp_dir, MODEL_DOI)
+    temp_dir = importlib_resources.files('miblab.datafiles')
+    weights_path = zenodo_fetch(MODEL, temp_dir, MODEL_DOI)
 
-    weights_path = os.path.join(temp_dir,'UNETR_kidneys_v2.pth')
+    if verbose:
+        print('Applying model to data..')
 
     # Setup device
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
@@ -101,6 +128,9 @@ def kidney_pc_dixon(input_array,overlap=0.3, postproc=True, clear_cache = False)
     with torch.no_grad():
         output_tensor = sliding_window_inference(input_tensor, (80,80,80), 4, model, overlap=overlap, device=device_str, progress=True) 
 
+    if verbose:
+        print('Post-processing results...')
+
     # From probabilities for each channel to label image
     output_tensor = torch.argmax(output_tensor, dim=1)
 
@@ -125,9 +155,12 @@ def kidney_pc_dixon(input_array,overlap=0.3, postproc=True, clear_cache = False)
     }
 
     if clear_cache:
+        if verbose:
+            print('Deleting downloaded files...')
         clear_cache_datafiles(temp_dir)
 
     return kidneys  
+
 
 def _largest_cluster(array:np.ndarray)->np.ndarray:
     """Given a mask array, return a new mask array containing only the largesr cluster.

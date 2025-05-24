@@ -6,4 +6,4 @@ osfclient
 vreg
 TotalSegmentator
 torch
-monai
+monai==1.3.2

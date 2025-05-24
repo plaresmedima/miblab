@@ -58,6 +58,8 @@ data = [
 dlseg = [
   'vreg',
   'TotalSegmentator',
+  'torch',
+  "monai==1.3.2",
 ]
 
 [tool.setuptools]

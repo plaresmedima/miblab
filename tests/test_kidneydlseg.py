@@ -1,28 +1,24 @@
 import dbdicom as db
 import numpy as np
-import miblab.kidneydlseg as kidneydlseg
-from src.miblab.data import zenodo_fetch
-import os
-import zipfile
-import tempfile
 
+from miblab import kidney_pc_dixon
+from miblab import zenodo_fetch
+
+import os
+ 
 
 def test_kidney_pc_dixon():
-    # Create a temporary directory
-    tmp_path = tempfile.mkdtemp()
+    
+    temp_dir = os.path.join(os.path.dirname(__file__), 'datafiles')
 
     testdata = 'test_data_post_contrast_dixon.zip'
     testdatadoi = '15489381'
 
     # Download ZIP file to temp directory
-    zenodo_fetch(testdata, tmp_path, testdatadoi)
-
-    # Unzip inside temp directory
-    zip_file_path = os.path.join(tmp_path, testdata)
-    extracted_folder = unzip_file(zip_file_path, extract_to=tmp_path)
+    zenodo_fetch(testdata, temp_dir, testdatadoi,extract=True)
 
     # Load DICOM database
-    database = db.database(path=extracted_folder)
+    database = db.database(path=os.path.join(temp_dir,'test_data_post_contrast_dixon'))
 
     series_outphase = database.series(SeriesDescription='Dixon_post_contrast_out_phase')
     series_inphase = database.series(SeriesDescription='Dixon_post_contrast_in_phase')
@@ -34,15 +30,9 @@ def test_kidney_pc_dixon():
     array_water, _ = series_water[0].array(['SliceLocation'], pixels_first=True, first_volume=True)
     array_fat, _ = series_fat[0].array(['SliceLocation'], pixels_first=True, first_volume=True)
 
-    array = np.stack((array_outphase, array_inphase, array_water, array_fat), axis=0)
+    array = np.stack((array_outphase, array_inphase, array_water, array_fat), axis=3)
 
-    mask = kidneydlseg.kidney_pc_dixon(array)
+    mask = kidney_pc_dixon(array)
 
     assert np.sum(mask['leftkidney']) == 62284#
 
-def unzip_file(zip_path, extract_to=None):
-    if extract_to is None:
-        extract_to = os.path.splitext(zip_path)[0]
-    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-        zip_ref.extractall(extract_to)
-    return extract_to

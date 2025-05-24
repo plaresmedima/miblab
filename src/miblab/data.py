@@ -32,7 +32,7 @@ DATASETS = {
 }
 
 def zenodo_fetch(dataset: str, folder: str, doi: str = None, filename: str = None,
-                 extract: bool = False, verbose: bool = False, keep_zip: bool = True):
+                 extract: bool = False, verbose: bool = False):
     """Download a dataset from Zenodo.
 
     Note if a dataset already exists locally it will not be downloaded 
@@ -47,7 +47,7 @@ def zenodo_fetch(dataset: str, folder: str, doi: str = None, filename: str = Non
           miblab's own Zenodo repositories.
         filename (str, optional): Filename of the downloaded dataset. 
           If this is not provided, then *dataset* is used as filename.
-        extract (bool): Whether to automatically extract downloaded ZIP files.
+        extract (bool): Whether to automatically extract downloaded ZIP files. 
         verbose (bool): If True, prints logging messages.
 
     Raises:
@@ -71,82 +71,79 @@ def zenodo_fetch(dataset: str, folder: str, doi: str = None, filename: str = Non
     else:
         file = os.path.join(folder, filename)
 
-    # If it is already downloaded, use that.
+    # If it is not already downloaded, download it.
     if os.path.exists(file):
+        if verbose:
+            print(f"Skipping {dataset} download, file {file} already exists.")
+    else:
+        # Get DOI
+        if doi is None:
+            if dataset in DATASETS:
+                doi = DATASETS[dataset]['doi']
+            else:
+                raise ValueError(
+                    f"{dataset} does not exist in one of the miblab "
+                    f"repositories on Zenodo. If you want to fetch " 
+                    f"a dataset in an external Zenodo repository, please "
+                    f"provide the doi of the repository."
+                )
+        
+        # Dataset download link
+        file_url = f"https://zenodo.org/records/{doi}/files/{filename or dataset}"
+
+        # Make the request and check for connection error
+        try:
+            file_response = requests.get(file_url) 
+        except requests.exceptions.ConnectionError as err:
+            raise requests.exceptions.ConnectionError(
+                f"\n\n"
+                f"A connection error occurred trying to download {dataset} "
+                f"from Zenodo. This usually happens if you are offline. "
+                f"The detailed error message is here: {err}"
+            ) 
+        
+        # Check for other errors
+        file_response.raise_for_status()
+
+        # Create the folder if needed
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+
+        # Save the file
+        with open(file, 'wb') as f:
+            f.write(file_response.content)
+
+    # If the zip file is requested we are done
+    if not extract:
         return file
     
-    # Get DOI
-    if doi is None:
-        if dataset in DATASETS:
-            doi = DATASETS[dataset]['doi']
-        else:
-            raise ValueError(
-                f"{dataset} does not exist in one of the miblab "
-                f"repositories on Zenodo. If you want to fetch " 
-                f"a dataset in an external Zenodo repository, please "
-                f"provide the doi of the repository."
+    # If extraction requested, returned extracted
+    if file[-4:] == '.zip':
+        extract_to = file[:-4]
+    else:
+        extract_to = file + '_unzip'
+
+    # Skip extraction if the folder already exists
+    if os.path.exists(extract_to):
+        if verbose:
+            print(f"Skipping {file} extraction, folder {extract_to} already exists.")
+        os.remove(file)
+        return extract_to
+
+    # Perform extraction
+    os.makedirs(extract_to)
+    with zipfile.ZipFile(file, 'r') as zip_ref:
+        bad_file = zip_ref.testzip()
+        if bad_file:
+            raise zipfile.BadZipFile(
+                f"Cannot extract: corrupt file {bad_file}."
             )
+        zip_ref.extractall(extract_to)
+
+    os.remove(file)
+    return extract_to
+
     
-    # Dataset download link
-    file_url = f"https://zenodo.org/records/{doi}/files/{filename or dataset}"
-
-    # Make the request and check for connection error
-    try:
-        file_response = requests.get(file_url) 
-    except requests.exceptions.ConnectionError as err:
-        raise requests.exceptions.ConnectionError(
-            f"\n\n"
-            f"A connection error occurred trying to download {dataset} "
-            f"from Zenodo. This usually happens if you are offline. "
-            f"The detailed error message is here: {err}"
-        ) 
-    
-    # Check for other errors
-    file_response.raise_for_status()
-
-    # Create the folder if needed
-    if not os.path.exists(folder):
-        os.makedirs(folder)
-
-    # Save the file
-    with open(file, 'wb') as f:
-        f.write(file_response.content)
-
-    # Extract all downloaded zip files if needed
-    if extract:
-        for dirpath, _, filenames in os.walk(folder):
-            for fname in filenames:
-                if fname.lower().endswith('.zip'):
-                    zip_path = os.path.join(dirpath, fname)
-                    extract_to = os.path.join(dirpath, fname[:-4])
-
-                    # Skip extraction if the folder already exists
-                    if os.path.exists(extract_to):
-                        if verbose:
-                            print(f"Skipping {zip_path}, folder {extract_to} already exists.")
-                        continue
-
-                    os.makedirs(extract_to, exist_ok=True)
-                    try:
-                        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                            bad_file = zip_ref.testzip()
-                            if bad_file:
-                                raise zipfile.BadZipFile(
-                                    f"Corrupt file {bad_file} inside {zip_path}"
-                                )
-                            zip_ref.extractall(extract_to)
-                        if not keep_zip:
-                            os.remove(zip_path)
-                            if verbose:
-                                print(f"Unzipped and deleted {zip_path}")
-                        else:
-                            if verbose:
-                                print(f"Unzipped {zip_path}, original kept")
-                    except Exception as e:
-                        if verbose:
-                            print(f"Warning unzipping {zip_path}: {e}")
-                
-    return file
 
 
 def clear_cache_datafiles(directory: str, verbose: bool = True):
@@ -275,6 +272,7 @@ def osf_fetch(dataset: str, folder: str, project: str = "un5ct", token: str = No
                         if verbose:
                             print(f"Warning unzipping {zip_path}: {e}")
     return folder
+
 
 def osf_upload(folder: str, dataset: str, project: str = "un5ct", token: str = None, verbose: bool = True, overwrite: bool = True):
     """

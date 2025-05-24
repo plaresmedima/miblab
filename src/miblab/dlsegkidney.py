@@ -59,9 +59,18 @@ def kidney_pc_dixon(input_array, overlap=0.3, postproc=True, clear_cache = False
         verbose (bool): If True, prints logging messages.
 
     Returns:
-        dict: A dictionary with the keys 'leftkidney' and 
+        dict: 
+            A dictionary with the keys 'leftkidney' and 
             'rightkidney', each containing a binary NumPy array 
             representing the respective kidney mask.
+    Example:
+
+        >>> import numpy as np
+        >>> import miblab
+        >>> data = np.random.rand((128, 128, 30, 4))
+        >>> mask = miblab.kidney_pc_dixon(data)
+        >>> print(mask['leftkidney'])
+        [0 1 1 ... 0 0 0]
     """
     if not torch_installed:
         raise ImportError(

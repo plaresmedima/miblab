@@ -12,7 +12,7 @@ A library of pre-trained deep-learning models.
     :gutter: 4 4 4 4
 
     .. grid-item-card::
-        :img-top: ../source/_static/unetr.png
+        :img-top: ../source/_static/unetr.gif
         :text-align: center
 
         **Kidney segmentation**
@@ -30,7 +30,7 @@ A library of pre-trained deep-learning models.
             **Download**
 
     .. grid-item-card::
-        :img-top: ../source/_static/nnunet.png
+        :img-top: ../source/_static/fatwater_nnunet.gif
         :text-align: center
 
         **Abdominal DIXON-MRI water/fat map calculation**

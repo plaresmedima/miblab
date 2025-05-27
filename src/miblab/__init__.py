@@ -12,3 +12,6 @@ import miblab.layout
 
 from miblab import dlsegkidney
 from miblab.dlsegkidney import *
+
+from miblab import dlsegkidneyfatwater
+from miblab.dlsegkidneyfatwater import *

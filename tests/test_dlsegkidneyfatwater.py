@@ -3,12 +3,10 @@ import shutil
 
 import dbdicom as db
 import numpy as np
+from scipy.stats import pearsonr
 
 from miblab import kidney_dixon_fat_water
 from miblab import zenodo_fetch
-
-from scipy.stats import pearsonr
-
 
 
 def test_kidney_dixon_fat_water():
@@ -31,15 +29,13 @@ def test_kidney_dixon_fat_water():
 
     array = np.stack(arrays, axis=-1)
 
-    fatwatermap = kidney_dixon_fat_water(array, verbose=True)
+    fatwatermap = kidney_dixon_fat_water(array, verbose=True, clear_cache =True)
     
     arraystest = (
-        db.pixel_data(study + ['Dixon_post_contrast_fat']),
-        db.pixel_data(study + ['Dixon_post_contrast_water'])) 
-    r, _ = pearsonr(arraystest[0].ravel(), fatwatermap['fat'].ravel()) #try without scipy numpy linealg to compute norm
+        db.pixel_data(study + ['Dixon_post_contrast_fat'])
+    )
+    r, _ = pearsonr(arraystest.ravel(), fatwatermap['fat'].ravel())
     assert r > 0.98942
-
-    fatwatermap = kidney_dixon_fat_water(array, verbose=True) #test with other options
 
     shutil.rmtree(tmp_dir)
 

@@ -6,7 +6,7 @@ import numpy as np
 import nibabel as nib
 
 from miblab.data import zenodo_fetch
-
+from miblab.data import clear_cache_datafiles
 
 if sys.version_info < (3, 9):
     # importlib.resources either doesn't exist or lacks the files()
@@ -32,7 +32,7 @@ except ImportError:
 MODEL = 'nnunet_kidney_fatwater_v1.zip'
 MODEL_DOI = "15356746"
 
-def kidney_dixon_fat_water(input_array, clear_cache = False, verbose=False):
+def kidney_dixon_fat_water(input_array, clear_cache =False, verbose=False):
     
     """
     Calculate fat/water maps on post-contrast Dixon images.
@@ -150,11 +150,7 @@ def kidney_dixon_fat_water(input_array, clear_cache = False, verbose=False):
     if clear_cache:
         if verbose:
             print('Deleting downloaded files...')
-        shutil.rmtree(weights_path)
-    
-    
-    shutil.rmtree(temp_dir)
-
+        clear_cache_datafiles(temp_dir)
 
     fatwatermap = {
         "fat": array_fat_calculated,

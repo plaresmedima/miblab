@@ -1,4 +1,4 @@
-from pathlib import Path
+import inspect
 
 # Configuration file for the Sphinx documentation builder.
 #
@@ -164,7 +164,14 @@ html_baseurl = "https://miblab.org"
 # autoclass_content = 'both'  # Direct autoclass to include both Class and __init__ doc strings 
 
 # Instruction to autoclass: do NOT document __init__
-autodoc_default_flags = ['members', 'private-members', 'special-members','show-inheritance']
+# autodoc_default_flags = ['members', 'private-members', 'special-members','show-inheritance']
+
+autodoc_default_options = {
+    "members": True,
+    "undoc-members": True,
+    "show-inheritance": True,
+    "no-inherited-members": True,  # Only works for autodoc >= 7.0
+}
 
 def autodoc_skip_member(app, what, name, obj, skip, options):
     # Ref: https://stackoverflow.com/a/21449475/

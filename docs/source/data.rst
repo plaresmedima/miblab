@@ -20,7 +20,7 @@ Open-access data from *miblab* projects.
 
         +++
 
-        .. button-link:: https://zenodo.org/records/15285027
+        .. button-link:: https://zenodo.org/records/14957320
             :expand:
             :color: secondary
             :click-parent:
@@ -38,7 +38,7 @@ Open-access data from *miblab* projects.
 
         +++
 
-        .. button-link:: https://zenodo.org/records/15285017
+        .. button-link:: https://zenodo.org/records/14957344
             :expand:
             :color: secondary
             :click-parent:

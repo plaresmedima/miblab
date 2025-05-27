@@ -34,7 +34,6 @@ def test_kidney_pc_dixon():
     assert np.sum(mask['leftkidney']) == 62284
 
     mask = kidney_pc_dixon(array, postproc=False, verbose=True)
-    #assert np.sum(mask['leftkidney']) == 62284
 
     shutil.rmtree(tmp_dir)
 

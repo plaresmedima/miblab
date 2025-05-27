@@ -32,13 +32,14 @@ def test_kidney_dixon_fat_water():
     array = np.stack(arrays, axis=-1)
 
     fatwatermap = kidney_dixon_fat_water(array, verbose=True)
+    
     arraystest = (
         db.pixel_data(study + ['Dixon_post_contrast_fat']),
         db.pixel_data(study + ['Dixon_post_contrast_water'])) 
-    r, _ = pearsonr(arraystest[0].ravel(), fatwatermap['fatmap'].ravel())
+    r, _ = pearsonr(arraystest[0].ravel(), fatwatermap['fat'].ravel()) #try without scipy numpy linealg to compute norm
     assert r > 0.98942
 
-    fatwatermap = kidney_dixon_fat_water(array, verbose=True)
+    fatwatermap = kidney_dixon_fat_water(array, verbose=True) #test with other options
 
     shutil.rmtree(tmp_dir)
 

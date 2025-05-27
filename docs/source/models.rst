@@ -22,7 +22,7 @@ A library of pre-trained deep-learning models.
 
         +++
 
-        .. button-link:: https://zenodo.org/records/14237436
+        .. button-link:: https://zenodo.org/records/11038328
             :expand:
             :color: secondary
             :click-parent:

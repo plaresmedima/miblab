@@ -28,7 +28,7 @@ except ImportError:
     torch_installed = False
 
 MODEL = 'UNETR_kidneys_v2.pth'
-MODEL_DOI = "11038328"
+MODEL_DOI = "15521814"
 
 
 def kidney_pc_dixon(input_array, overlap=0.3, postproc=True, clear_cache = False, verbose=False):
@@ -40,7 +40,7 @@ def kidney_pc_dixon(input_array, overlap=0.3, postproc=True, clear_cache = False
     in-phase images, water maps, and fat maps.
 
     This uses a pretrained UNETR-based model in MONAI, hosted on 
-    `Zenodo <https://zenodo.org/records/11038328>`_
+    `Zenodo <https://zenodo.org/records/15521814>`_
 
     Args:
         input_array (numpy.ndarray): A 4D numpy array of shape 

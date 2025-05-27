@@ -76,4 +76,5 @@ Interfaces for deploying deep learning models.
 
    totseg
    kidney_pc_dixon
+   kidney_dixon_fat_water
    

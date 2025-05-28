@@ -4,9 +4,9 @@ SOPs for maintainers
 Building a virtual environment
 ------------------------------
 
-Clone vreg package locally
+Clone miblab folder locally
 
-cd to vreg top folder
+cd to miblab top folder
 
 On windows:
 >>> python -m venv .venv           # create virtual environment
@@ -16,75 +16,17 @@ Then select the Python interpreter in the .venv folder. In VSCode:
 View > Command Palette > Python select interpreter -> enter interpreter path 
 (.venv/Scripts/python.exe)
 
+Install requirements:
 
-Installation
-------------
-
-Install vreg from source:
-
->>> pip install -e path\to\vreg
-
-Install tests requirements:
-
-cd to vreg/tests
->>> pip install -r requirements.txt
-
-Install docs requirements:
-
-cd to vreg/docs
->>> pip install -r requirements.txt
-
-Install dev requirements:
-
-cd to vreg/dev
 >>> pip install -r requirements.txt
 
 To leave:
 >>> deactivate
 
 
-Enforce PEP8
-------------
-
-cd to /vreg top folder
-
-To fix a single file
->>> autopep8 src/vreg/file.py --in-place
-
-To fix the whole project
->>> autopep8 src/vreg --recursive --in-place --pep8-passes 2000 --verbose
-
-Check any remaining isues and fix manually
->>> pycodestyle src/vreg --ignore=E501
-
-Note agressive option - dangerous - may need debugging. Use carefully and test 
-after changing
->>> autopep8 src/vreg/file.py --in-place --aggressive
-
-
-
-Run test suite and check test coverage
---------------------------------------
-
-cd to /vreg top folder
->>> pytest --cov=miblab --cov-report term-missing
-
-To run a specific file (eg. test_utils) only, do:
->>> pytest tests/test_utils.py --cov=vreg --cov-report term-missing
-
-
-Check tests in docstrings
--------------------------
-
-To test file.py, cd to directory of file.py, then do:
->>> pytest --doctest-modules file.py
-
-To insert the expected test results, do:
->>> pytest --doctest-modules file.py --accept
-
-
 Build documentation locally
 ---------------------------
+
 cd to docs
 >>> ./make html
 
@@ -103,7 +45,7 @@ Building release notes
 - Save the token in the environment variable GH_TOKEN. On windows:
 >>> $env:GH_TOKEN='token'
 - Build the changelog from current version to current dev. For instance:
->>> changelist openmiblab/miblab v0.0.5 main --format rst
+>>> changelist openmiblab/miblab-package v0.0.10 main --format rst
 - Copy-paste the terminal output in an .rst file and save it in docs/source/releases
 - Edit the content of the file manually as needed
 - Add an entry in the index of docs/source/releases

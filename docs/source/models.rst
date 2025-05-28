@@ -40,7 +40,7 @@ A library of pre-trained deep-learning models.
 
         +++
 
-        .. button-link:: https://zenodo.org/records/15356746
+        .. button-link:: https://zenodo.org/records/15356745
             :expand:
             :color: secondary
             :click-parent:

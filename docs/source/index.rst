@@ -35,11 +35,22 @@ imaging biomarkers*
 `OSF project <https://osf.io/un5ct/>`_ 
 
 
+****
+Who?
+****
+
+*miblab* is based in the 
+`medical imaging group <https://www.sheffield.ac.uk/smph/research/themes/imaging>`_ 
+at the University of Sheffield, UK. Resources shared on these pages are 
+developed in collaboration with other groups in the private and 
+public sector [see :ref:`about <about>`].
+
+
 *******
 Mission
 *******
 
-To accelerate the uptake of medical imaging biomarkers in research, drug 
+To promote the uptake of medical imaging biomarkers in research, drug 
 development and clinical practice.
 
 
@@ -47,14 +58,13 @@ development and clinical practice.
 Approach
 ********
 
-We will achieve our mission by a commitment to share resources freely, 
+We are committed to sharing our resources freely, 
 with robust software architectures and user interfaces that are transparent 
 and consistent across all of *miblab*'s resources. 
 
 Our aim is to maximise the opportunities for reuse of data, software and 
-measurement protocols. This will accelerate uptake of medical imaging 
-biomarkers by improving both the efficiency and reproducibility of research 
-and development.
+measurement protocols - with a view of improving the efficiency and 
+reproducibility of research, development and deployment of medical imaging biomarkers.
 
 
 *********

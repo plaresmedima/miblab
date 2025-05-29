@@ -5,7 +5,7 @@ Models
 ######
 
 
-A library of pre-trained deep-learning models.
+Pre-trained deep-learning models.
 
 
 .. grid:: 1 1 2 2
@@ -18,11 +18,29 @@ A library of pre-trained deep-learning models.
         **Kidney segmentation**
         ^^^
 
-        Segementing kidneys on DIXON-MRI
+        Segmenting kidneys on DIXON-MRI (UNETR)
 
         +++
 
         .. button-link:: https://zenodo.org/records/11038328
+            :expand:
+            :color: secondary
+            :click-parent:
+
+            **Download**
+
+    .. grid-item-card::
+        :img-top: ../source/_static/3d_mask.gif
+        :text-align: center
+
+        **Kidney segmentation**
+        ^^^
+
+        Segmenting kidneys on DIXON-MRI (nnUNET)
+
+        +++
+
+        .. button-link:: https://zenodo.org/records/14827987
             :expand:
             :color: secondary
             :click-parent:

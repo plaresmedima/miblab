@@ -1,23 +1,29 @@
+.. _about:
+
 #####
 About
 #####
+
 
 
 ********
 Projects
 ********
 
-Current *miblab* resources have been developed through the following collaborative 
-projects:
-
 .. raw:: html
 
     <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+      <a href="https://www.cost.eu/parenchima-kidney-disease/" target="_blank">
+        <img src="../_static/parenchima-logo.jpg" width="200"/>
+      </a>
       <a href="https://www.imi-tristan.eu/" target="_blank">
         <img src="../_static/tristan-logo.jpg" width="200"/>
       </a>
       <a href="https://www.beat-dkd.eu/" target="_blank">
         <img src="../_static/ibeat-logo.PNG" width="200"/>
+      </a>
+      <a href="https://pubmed.ncbi.nlm.nih.gov/34688256/" target="_blank">
+        <img src="../_static/heparim-logo.jpg" width="200"/>
       </a>
       <a href="https://www.nottingham.ac.uk/research/groups/spmic/research/uk-renal-imaging-network/ukrin-maps.aspx" target="_blank">
         <img src="../_static/ukrin-maps.png" width="200"/>
@@ -35,11 +41,15 @@ projects:
 Funders
 *******
 
-These projects were funded by:
-
 .. raw:: html
 
     <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+      <a href="https://www.kidneyresearchuk.org/" target="_blank">
+        <img src="../_static/kruk-logo.png" width="200"/>
+      </a>
+      <a href="https://www.cost.eu/" target="_blank">
+        <img src="../_static/cost-logo.png" width="200"/>
+      </a>
       <a href="https://www.ukri.org/councils/mrc/" target="_blank">
         <img src="../_static/ukri-mrc-square-logo.png" width="200"/>
       </a>
@@ -58,9 +68,5 @@ These projects were funded by:
 ***********
 Maintainers
 ***********
-
-*miblab* is maintained by the 
-`medical imaging group <https://www.sheffield.ac.uk/smph/research/themes/imaging>`_ 
-at the University of Sheffield, UK. 
 
 .. include:: teams.inc

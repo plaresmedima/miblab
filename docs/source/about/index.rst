@@ -8,10 +8,10 @@ About
 
     <h2 class="highlight-title">Who?</h2>
 
-*miblab* is a research group within the
+*miblab* is a research group focused on development of 
+medical imaging biomarkers, based within the
 `section of medical imaging <https://www.sheffield.ac.uk/smph/research/themes/imaging>`_ 
-at the University of Sheffield (UK), focused on development of 
-medical imaging biomarkers.
+at the University of Sheffield (UK), .
 
 We are committed to working in maximal transparency and sharing our 
 resources freely and accessibly - not only the results of our 
@@ -25,13 +25,12 @@ develop along the way.
 We believe that reproducible science is key to the wider uptake of 
 imaging biomarkers in research and clinical practice. And science can 
 only be reproducible if the entire process is open to independent 
-scrutiny - not just the compact summary we write at the end submit 
-for publication.
+scrutiny - not just the compact summary that we write at the end.
 
-We believe that allowing data and software to be reused offers the 
-best value-for-money for funders and taxpayers. It means we can promise 
-our study participants, who agree to additional tests in difficult conditions, 
-that we will make the most of the data they donate.
+We believe that allowing data and software to be reused by others offers the 
+best value-for-money for funders and taxpayers. It also means we can promise 
+our study participants that we will make the most (literally) of the 
+data they so generously donate.
 
 
 .. raw:: html

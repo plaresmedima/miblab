@@ -146,7 +146,7 @@ html_static_path = ['_static']
 # Add anyc CSS files placed in _static here so they can be found when building the documentation
 
 html_css_files = [
-    'teams.css', # templates for the teams mosaic in About
+    'custom.css', # templates for the teams mosaic in About
 ]
 
 # The suffix(es) of source filenames.

@@ -7,6 +7,10 @@ Models
 
 Pre-trained deep-learning models.
 
+.. raw:: html
+
+    <h2 class="highlight-title">Segmentation</h2>
+
 
 .. grid:: 1 1 2 2
     :gutter: 4 4 4 4
@@ -46,6 +50,15 @@ Pre-trained deep-learning models.
             :click-parent:
 
             **Download**
+
+
+.. raw:: html
+
+    <h2 class="highlight-title">Mapping</h2>
+
+
+.. grid:: 1 1 2 2
+    :gutter: 4 4 4 4
 
     .. grid-item-card::
         :img-top: ../source/_static/fatwater_nnunet.gif

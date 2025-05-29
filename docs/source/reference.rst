@@ -18,19 +18,19 @@ models, generating pdf reports, or deploying pipelines.
 
 This page provides an API reference guide for the package. 
 
+.. raw:: html
 
-***************
-Version history
-***************
+    <h2 class="highlight-title">Version history</h2>
 
 For a version history see the :ref:`releases page <miblab_releases>`.
 
 .. currentmodule:: miblab
 
 
-*********
-Reporting
-*********
+.. raw:: html
+
+    <h2 class="highlight-title">Reporting</h2>
+
 
 To access these functions, miblab must be installed with the `report` option:
 
@@ -47,9 +47,9 @@ All reporting functionality is wrapped up in a single class:
    Report
 
 
-****
-Data
-****
+.. raw:: html
+
+    <h2 class="highlight-title">Data</h2>
 
 To access these functions, miblab must be installed with the `data` option:
 
@@ -72,9 +72,9 @@ and
    osf_upload
 
 
-*****************
-Deep learning API
-*****************
+.. raw:: html
+
+    <h2 class="highlight-title">Deep-learning API</h2>
 
 To access these functions, miblab must be installed with the `dlseg` option:
 

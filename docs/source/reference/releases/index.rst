@@ -1,6 +1,7 @@
-########
+.. _miblab_releases:
+
 Releases
-########
+--------
 
 
 .. toctree::

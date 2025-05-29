@@ -11,6 +11,13 @@
 
    
    
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~Report.packages
+   
    
 
 

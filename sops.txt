@@ -61,5 +61,3 @@ Updating the docs
 - Merge the dev branch with the main branch. 
   Check that the documentation builds OK. Check README. 
 - Set the URL back to miblab.org in https://github.com/openmiblab/miblab/settings/pages
-
-

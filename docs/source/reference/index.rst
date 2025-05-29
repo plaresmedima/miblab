@@ -1,15 +1,29 @@
 .. _api_reference:
 
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   
+   releases/index
+
+
 ###
 API
 ###
 
 
-A list of all functions in the ``miblab`` python package. 
+The `miblab` python package provides an API to *miblab* functionality
+that is relevant across applications such as retrieving data or 
+models, generating pdf reports, or deploying pipelines.
 
-This package provides an API to *miblab* operations that are relevant 
-across applications such as retrieving data or models, generating pdf 
-reports, or deploying pipelines.
+This page provides an API reference guide for the package. 
+
+
+***************
+Version history
+***************
+
+For a version history see the :ref:`releases page <miblab_releases>`.
 
 .. currentmodule:: miblab
 

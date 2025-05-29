@@ -11,7 +11,6 @@
    reference/index
    projects
    contribute/index
-   releases/index
    about/index
 
 

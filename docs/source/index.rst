@@ -8,9 +8,7 @@
    data
    pipelines
    models
-   reference/index
-   projects
-   contribute/index
+   reference
    about/index
 
 

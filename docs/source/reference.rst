@@ -41,7 +41,7 @@ To access these functions, miblab must be installed with the `report` option:
 All reporting functionality is wrapped up in a single class:
 
 .. autosummary::
-   :toctree: ../api/
+   :toctree: ./api/
    :template: custom-class-template.rst
 
    Report
@@ -64,7 +64,7 @@ and
 
 
 .. autosummary::
-   :toctree: ../api/
+   :toctree: ./api/
    :template: autosummary.rst
 
    zenodo_fetch
@@ -85,7 +85,7 @@ To access these functions, miblab must be installed with the `dlseg` option:
 Interfaces for deploying deep learning models.
 
 .. autosummary::
-   :toctree: ../api/
+   :toctree: ./api/
    :template: autosummary.rst
 
    totseg

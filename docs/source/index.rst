@@ -9,7 +9,7 @@
    models
    pipelines
    reference
-   about/index
+   about
 
 
 
@@ -68,7 +68,7 @@ imaging biomarkers*
         <h3>API</h3>
         <p>Interact programmatically with miblab infrastructure.</p>
       </a>
-      <a class="landing-box" href="about/index.html">
+      <a class="landing-box" href="about.html">
         <img src="_static/univ-sheffield.png" alt="About">
         <h3>About</h3>
         <p>Who we are, what we do and why we do it.</p>
